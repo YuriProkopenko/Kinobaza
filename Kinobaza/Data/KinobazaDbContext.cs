@@ -7,10 +7,102 @@ namespace Kinobaza.Data
     {
         public DbSet<Genre> Genres {  get; set; }
         public DbSet<Movie> Movies { get; set; }
+        public DbSet<User> Users { get; set; }
         public KinobazaDbContext(DbContextOptions<KinobazaDbContext> options) : base(options)
         {
             if (Database.EnsureCreated())
             {
+                User admin = new()
+                {
+                    Login = "admin",
+                    Email = "admin@gmail.com",
+                    Password = "D5CDEDF54566480FADA61635BB7D5A25",
+                    Salt = "943078C0E5F373684F8C23DF51B2E9F4",
+                    Status = null
+                };
+                User user1 = new()
+                {
+                    Login = "user1",
+                    Email = "user1@gmail.com",
+                    Password = "1655CCFC58214870FA45B2D346FC4640",
+                    Salt = "1618CC3D9CAE3971D33680FC1DCA5F24",
+                    Status = "waiting"
+                };
+                User user2 = new()
+                {
+                    Login = "user2",
+                    Email = "user2@gmail.com",
+                    Password = "AA135297410B66DB8C5E51AF04F19357",
+                    Salt = "DD1E12BBA66955E43B531D9F56065526",
+                    Status = "waiting"
+                };
+                User user3 = new()
+                {
+                    Login = "user3",
+                    Email = "user3@gmail.com",
+                    Password = "DA227DDBAD0AFFEE7D54702CC56CA1AE",
+                    Salt = "B9BFBE92C051BD486783AED7F4DDDBAF",
+                    Status = "waiting"
+                };
+                User user4 = new()
+                {
+                    Login = "user4",
+                    Email = "user4@gmail.com",
+                    Password = "63808136E2A1B4BAA08242AFF74ED0F4",
+                    Salt = "3CD88D20C4262D659756A345DBDB1C2B",
+                    Status = "waiting"
+                };
+                User user5 = new()
+                {
+                    Login = "user5",
+                    Email = "user5@gmail.com",
+                    Password = "14EA9DCFB768B6B87409B134E8408428",
+                    Salt = "DC0607E3E58A418EBF866E9CA02A05D2",
+                    Status = "waiting"
+                };
+                User user6 = new()
+                {
+                    Login = "user6",
+                    Email = "user6@gmail.com",
+                    Password = "FB7C17554C85FDBFAEE951B452BB7116",
+                    Salt = "9EE056E0E74B7DCD99245CF0860D8566",
+                    Status = "waiting"
+                };
+                User user7 = new()
+                {
+                    Login = "user7",
+                    Email = "user7@gmail.com",
+                    Password = "9C8F9113D6EC7873D23EBAA7B93234CA",
+                    Salt = "A7FFD3B31B453B8C9CCC41577BBF6BF2",
+                    Status = "waiting"
+                };
+                User user8 = new()
+                {
+                    Login = "user8",
+                    Email = "user8@gmail.com",
+                    Password = "2681B8E55367F312596CDCA0DD72457D",
+                    Salt = "FFADE8DADB60AA7503A2C733B8017788",
+                    Status = "waiting"
+                };
+                User user9 = new()
+                {
+                    Login = "user9",
+                    Email = "user9@gmail.com",
+                    Password = "C13AC2AAB72323436703D25EADDB9149",
+                    Salt = "ED2BB4E16CF6BB11E9A8F52441E60DEF",
+                    Status = "waiting"
+                };
+                User user10 = new()
+                {
+                    Login = "user10",
+                    Email = "user10@gmail.com",
+                    Password = "376A7518ACCC5FF816118DB32E03D8C0",
+                    Salt = "9A3381A07387F65E5CDFDEB1BA50446D",
+                    Status = "waiting"
+                };
+
+                Users?.AddRange(admin, user1, user2, user3, user4, user5, user6, user7, user8, user9, user10);
+
                 Genre drama = new() { Name = "Драма" };
                 Genre adventure = new() { Name = "Приключение" };
                 Genre action = new() { Name = "Боевик" };
@@ -84,7 +176,7 @@ namespace Kinobaza.Data
                 };
                 Movie _ElLaberintoDelFauno = new()
                 {
-                    Image = @"\images\movies\Pan's Labyrinth.jpg",
+                    Image = @"\images\movies\Pans_Labyrinth.jpg",
                     TitleRU = "Лабиринт Фавна",
                     TitleEN = "Pan's Labyrinth",
                     PremiereDate = new DateTime(2006, 5, 27),

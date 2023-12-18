@@ -1,23 +1,24 @@
-/* Author */
+﻿/* Profile */
 
 /* wrapper */
 
-.registr {
+.profile {
+    padding-bottom: 55px;
 }
 
 /* return  */
 
-.registr__return {
+.profile__return {
     display: grid;
-    align-content: center;
+    align-content: start;
     justify-content: start;
     padding: 35px 0px 0px 35px;
 }
 
 /* title */
 
-.registr__title {
-    margin-top: 55px;
+.profile__title {
+    margin-top: 15px;
     text-align: center;
     font-size: 18px;
     font-weight: 600;
@@ -26,7 +27,7 @@
 
 /* form */
 
-.registr__form {
+.profile__form {
     display: grid;
     justify-items: center;
     width: 290px;
@@ -36,21 +37,21 @@
 
 /* label */
 
-.registr__label {
+.profile__label {
     color: var(--basic-grey);
     margin-left: 2px;
 }
 
 /* input */
 
-.registr__input-field {
+.profile__input-field {
     width: 100%;
-    padding: 0px 5px 15px 5px;
+    padding: 0px 5px 35px 5px;
 }
 
 /* buttons */
 
-.registr__buttons {
+.profile__buttons {
     width: 200px;
-    padding-top: 35px;
+    padding: 15px 0px;
 }

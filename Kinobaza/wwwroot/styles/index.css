@@ -41,10 +41,12 @@
 @import 'blocks/main/genres/genres-upsert.css';
 
 /* Login */
+
 @import 'blocks/main/login/author.css';
 @import 'blocks/main/login/logout.css';
 @import 'blocks/main/login/registr.css';
 @import 'blocks/main/login/accounts.css';
+@import 'blocks/main/login/profile.css';
 
 /* Footer */
 

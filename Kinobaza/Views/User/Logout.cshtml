@@ -1,0 +1,28 @@
+﻿
+<!-- Logout -->
+<section class="logout">
+
+    <!--title-->
+    <div class="logout__title">
+        <p class="logout__title-main">Выйти из системы?</p>
+        <p>
+            Вы не сможете оставлять комментарии и будете перенаправлены на главную
+            страницу
+            сайта.
+        </p>
+    </div>
+
+    <!--form-->
+    <form class="logout__form" asp-action="Logout">
+
+        <!--buttons-->
+        <div class="logout__buttons">
+            <div class="buttons__cancel-btn">
+                <a class="button button--red" asp-controller="Home" asp-action="Index">нет</a>
+            </div>
+            <div class="buttons__confirm-btn">
+                <input class="button button--green" type="submit" value="да">
+            </div>
+        </div>
+    </form>
+</section>

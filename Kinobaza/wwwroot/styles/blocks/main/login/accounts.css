@@ -1,109 +1,117 @@
 /* Accounts */
 
 .accounts {
-   display: grid;
-   grid-template: minmax(auto, 150px) 1fr / 1fr;
-   padding: 15px;
+    display: grid;
+    grid-template: minmax(auto, 150px) 1fr / 1fr;
+    padding: 15px 35px;
 }
 
 /* toolbar */
 
 .accounts__toolbar {
-   display: grid;
-   grid-auto-flow: row;
-   justify-items: center;
-   row-gap: 15px;
-   padding-top: 25px;
+    display: grid;
+    grid-auto-flow: row;
+    justify-items: center;
+    row-gap: 15px;
+    padding-top: 25px;
 }
 
 /* search */
 
 .accounts__search {
-   max-width: 500px;
+    max-width: 500px;
 }
 
 /* checkboxes */
 
 .accounts__checkboxes {
-   display: grid;
-   grid-auto-flow: column;
-   align-items: center;
-   column-gap: 20px;
+    display: grid;
+    grid-auto-flow: column;
+    align-items: center;
+    column-gap: 20px;
 }
 
-@media(width <600px) {
-   .accounts__checkboxes {
-      grid-auto-flow: row;
-      row-gap: 10px;
-   }
+@media(width <700px) {
+    .accounts__checkboxes {
+        grid-auto-flow: row;
+        row-gap: 10px;
+    }
 }
 
 /* body */
 
 .accounts__body {
-   display: grid;
-   grid-row: 2 / 2;
+    display: grid;
+    grid-row: 2 / 2;
 }
 
 /* accounts quantity */
 
 .accounts__quantity {
-   justify-self: center;
-   padding-bottom: 25px;
+    justify-self: center;
+    padding-bottom: 25px;
 }
 
-@media(width<600px) {
-   .accounts__quantity {
-      padding-top: 35px;
-   }
+@media(width<700px) {
+    .accounts__quantity {
+        padding-top: 35px;
+    }
 }
 
 /* items */
 
-.accounts__items {}
+.accounts__items {
+}
 
 /* item */
 
-.accounts__item {
-   display: grid;
-   grid-auto-flow: column;
-   padding: 10px;
-   align-items: center;
-   justify-items: center;
+@media(width >=700px) {
+    .accounts__item {
+        display: grid;
+        grid-template: 45px / 200px 1fr 300px;
+        padding: 10px;
+        align-items: center;
+        justify-items: center;
+        border-bottom: var(--dividing-border);
+    }
 }
 
-@media(width <600px) {
-   .accounts__item {
-      grid-auto-flow: row;
-      row-gap: 5px;
-      padding: 5px;
-      align-items: center;
-      justify-items: center;
-   }
+@media(width <700px) {
+    .accounts__item {
+        display: grid;
+        grid-auto-flow: row;
+        row-gap: 5px;
+        padding: 10px;
+        align-items: center;
+        justify-items: center;
+        border-bottom: var(--dividing-border);
+    }
 }
 
 .accounts__item--red {
-   background-color: var(--basic-red-extra-light);
+    background-color: var(--basic-red-extra-light);
 }
 
 .accounts__item--blue {
-   background-color: var(--basic-blue-extra-light);
+    background-color: var(--basic-blue-extra-light);
 }
 
 .accounts__item--green {
-   background-color: var(--basic-green-extra-light);
+    background-color: var(--basic-green-extra-light);
 }
 
 /* name */
 
-.accounts__name {}
+.accounts__name {
+}
 
 /* email */
 
-.accounts__email {}
+.accounts__email {
+}
 
 /* status */
 
 .accounts__status {
-   width: 160px;
+    width: 160px;
 }

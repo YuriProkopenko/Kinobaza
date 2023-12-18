@@ -1,0 +1,58 @@
+﻿@model UserRegVM
+
+<!-- Registr -->
+<section class="registr">
+
+    <!-- return -->
+    <div class="registr__return">
+        <a class="button button--return button--return-registr" asp-controller="Home" asp-action="Index">на главную</a>
+    </div>
+
+    <!-- title -->
+    <h1 class="registr__title">Регистрация</h1>
+
+    <!-- form -->
+    <form class="registr__form" asp-action="Registration" method="post">
+
+        <div class="valid-span-summary" asp-validation-summary="ModelOnly"></div>
+
+        <!-- inputs -->
+        <div class="registr__input-field">
+            <div class="text-field">
+                <label class="text-field__label" asp-for="Login">Логин</label>
+                <input class="text-field__input" asp-for=Login type="text" maxlength="20">
+            </div>
+            <span class="valid-span" asp-validation-for="Login"></span>
+        </div>
+
+        <div class="registr__input-field">
+            <div class="text-field">
+                <label class="text-field__label" asp-for="Email">Электронный адресс</label>
+                <input class="text-field__input" asp-for=Email type="text" maxlength="50">
+            </div>
+            <span class="valid-span" asp-validation-for="Email"></span>
+        </div>
+
+        <div class="registr__input-field">
+            <div class="text-field">
+                <label class="text-field__label" asp-for="Password">Пароль</label>
+                <input class="text-field__input" asp-for=Password type="password" maxlength="50">
+            </div>
+            <span class="valid-span" asp-validation-for="Password"></span>
+        </div>
+
+        <div class="registr__input-field">
+            <div class="text-field">
+                <label class="text-field__label" asp-for="PasswordConfirm">Подтверждение пароля</label>
+                <input class="text-field__input" asp-for=PasswordConfirm type="password" maxlength="50">
+            </div>
+            <span class="valid-span" asp-validation-for="PasswordConfirm"></span>
+        </div>
+
+        <!--buttons-->
+        <div class="registr__buttons">
+            <input class="button button--green" type="submit" value="принять" />
+        </div>
+
+    </form>
+</section>

@@ -16,6 +16,16 @@ namespace Kinobaza.Controllers
 
         public async Task<IActionResult> Index()
         {
+
+            //check authorization and get user login from cookies
+            var login = HttpContext.Session.GetString("login");
+            var cookiesLogin = Request.Cookies["login"];
+            if (cookiesLogin is not null && login is null)
+            {
+                HttpContext.Session.SetString("login", Request.Cookies["login"]);
+                WC.UserLogin = cookiesLogin;
+            }
+
             IEnumerable<Movie> movies = await Task.Run(() => _context.Movies.Include(m => m.Genres).ToListAsync());
             return View(movies);
         }

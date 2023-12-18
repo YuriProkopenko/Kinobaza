@@ -1,0 +1,46 @@
+﻿@model UserProfileVM;
+
+<!-- Profile -->
+<section class="profile">
+
+    <div class="profile__return">
+        <a class="button button--return" asp-controller="Home" asp-action="Index">на главную</a>
+    </div>
+
+    <!-- title -->
+    <h1 class="profile__title">Профиль, @Model.Login</h1>
+
+    <!-- form -->
+    <form class="profile__form" asp-action="Profile" method="post">
+        <input type="hidden" asp-for="Login" value="@Model.Login"/>
+
+        <!-- inputs -->
+        <div class="profile__input-field">
+            <div class="text-field">
+                <label class="text-field__label" asp-for="Password">Пароль</label>
+                <input class="text-field__input" asp-for="Password">
+            </div>
+            <span class="valid-span" asp-validation-for="Password"></span>
+        </div>
+        <div class="profile__input-field">
+            <div class="text-field">
+                <label class="text-field__label" asp-for="NewPassword">Новый пароль</label>
+                <input class="text-field__input" asp-for="NewPassword">
+            </div>
+            <span class="valid-span" asp-validation-for="NewPassword"></span>
+        </div>
+        <div class="profile__input-field">
+            <div class="text-field">
+                <label class="text-field__label" asp-for="NewPasswordConfirm">Подтверждение нового пароля</label>
+                <input class="text-field__input" asp-for="NewPasswordConfirm">
+            </div>
+            <span class="valid-span" asp-validation-for="NewPasswordConfirm"></span>
+        </div>
+
+        <!--buttons-->
+        <div class="profile__buttons">
+            <button class="button button--green" type="submit">сменить</button>
+        </div>
+
+    </form>
+</section>
