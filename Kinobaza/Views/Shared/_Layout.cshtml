@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@{
+    var login = this.Context.Session.GetString("login");
+}
+
+<!DOCTYPE html>
 <html lang="ru">
 
 <head>
@@ -28,7 +32,7 @@
                 <!-- forum -->
                 <li><a asp-controller="Forum" asp-action="Topics" class="menu__link">Форум</a></li>
 
-                @if (WC.UserLogin == "admin")
+                @if (login == "admin")
                 {
                     <!-- content -->
                     <li class="dropdown">
@@ -42,7 +46,7 @@
                     <!-- users -->
                     <li><a asp-controller="User" asp-action="Accounts" class="menu__link">Пользователи</a></li>
                 }
-                @if (WC.UserLogin is not null)
+                @if (login is not null)
                 {
                     <!-- user -->
                     <li class="dropdown">
@@ -53,11 +57,12 @@
                         </ul>
                     </li>
                 }
-                @if (WC.UserLogin is null)
+                @if (login is null)
                 {
                     <!-- sign in -->
                     <li><a class="menu__link menu__link--signin" asp-controller="User" asp-action="Authorization">Войти</a></li>
                 }
+
             </ul>
 
             <!-- burger -->

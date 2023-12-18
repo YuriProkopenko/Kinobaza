@@ -65,6 +65,30 @@
                                     }
                                 </div>
 
+                                <!-- content -->
+                                @if (recordVM.FileNames is not null)
+                                {
+                                    @foreach (var content in recordVM.FileNames)
+                                    {
+                                        <div class="topic__desc">
+                                            <div class="topic__content">
+                                                @if (content.Contains("image"))
+                                                {
+                                                    <img src="@content" alt="image">
+                                                }
+                                                @if (content.Contains("audio"))
+                                                {
+                                                    <audio controls src="@content"></audio>
+                                                }
+                                                @if (content.Contains("video"))
+                                                {
+                                                    <video controls src="@content"></video>
+                                                }
+                                            </div>
+                                        </div>
+                                    }
+                                }
+
                                 <!-- text -->
                                 <div class="topic__desc">@recordVM.Text</div>
                             </div>

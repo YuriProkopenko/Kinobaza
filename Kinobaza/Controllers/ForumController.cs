@@ -11,11 +11,13 @@ namespace Kinobaza.Controllers
     {
         private readonly ITopicRepository _topicRepo;
         private readonly IRecordRepository _recordRepo;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public ForumController(ITopicRepository topicRepo, IRecordRepository recordRepo)
+        public ForumController(ITopicRepository topicRepo, IRecordRepository recordRepo, IWebHostEnvironment webHostEnvironment)
         {
             _topicRepo = topicRepo;
             _recordRepo = recordRepo;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         [HttpGet]
@@ -123,6 +125,29 @@ namespace Kinobaza.Controllers
                 var topic = await _topicRepo.FirstOrDefaultAsync(t => t.Id == topicVM.Id, includeProperties: "Records");
                 if (topic is null) return NotFound();
 
+                //get records of topic
+                var records = await _recordRepo.GetAllAsync(r => r.TopicId == topic.Id, includeProperties: "Files");
+
+                //remove content of this topic
+                var contentFilesPath = new List<string>();
+                if (records is not null)
+                    foreach (var record in records)
+                    {
+                        if (record.Files is not null)
+                            foreach (var contentFile in record.Files)
+                            {
+                                if(contentFile.FilePath is not null)
+                                    contentFilesPath.Add(contentFile.FilePath);
+                            }
+                    }
+                //find a path to an file content directory
+                var webRootPath = _webHostEnvironment.WebRootPath;
+                foreach (var contentFile in contentFilesPath)
+                {
+                    var oldFile = webRootPath + contentFile;
+                    if (System.IO.File.Exists(oldFile)) System.IO.File.Delete(oldFile);
+                }
+
                 //remove records and topics
                 _topicRepo.Remove(topic);
                 await _topicRepo.SaveAsync();
@@ -140,6 +165,7 @@ namespace Kinobaza.Controllers
 
             //get topic by id from db
             var topic = await _topicRepo.FirstOrDefaultAsync(t => t.Id == id, includeProperties: "Records");
+            var records = await _recordRepo.GetAllAsync(r => r.Topic!.Id == id, includeProperties: "Files");
 
             //check if topic is null
             if (topic is null) return NotFound();
@@ -148,18 +174,29 @@ namespace Kinobaza.Controllers
 
             //get recordsVM
             var recordsVM = new List<ForumRecordVM>();
-            if (topic.Records is not null)
+            foreach (var record in records) 
             {
-                foreach (var record in topic.Records)
+                //get content files
+                var fileNames = new List<string>();
+                if (record.Files is not null)
                 {
-                    recordsVM.Add(new ForumRecordVM()
+                    foreach (var contentFile in record.Files)
                     {
-                        Id = record.Id,
-                        Author = record.Author,
-                        Text = record.Text,
-                        Date = record.Date,
-                    }); ;
+                        if (contentFile is not null && contentFile.FilePath is not null)
+                        {
+                            fileNames.Add(contentFile.FilePath);
+                        }
+                    }
                 }
+
+                recordsVM.Add(new ForumRecordVM()
+                {
+                    Id = record.Id,
+                    Author = record.Author,
+                    Text = record.Text,
+                    Date = record.Date,
+                    FileNames = fileNames
+                }); ;
             }
 
             //create view model
@@ -196,6 +233,56 @@ namespace Kinobaza.Controllers
             {
                 try
                 {
+                    //checking for uploaded files
+                    var files = HttpContext.Request.Form.Files;
+
+                    //create content files
+                    var contentFiles = new List<ContentFile>();
+
+                    //if files is not empty save files
+                    if (files is not null)
+                    {
+                        //find a path to the users content directory
+                        var webRootPath = _webHostEnvironment.WebRootPath;
+                        var upload = webRootPath + WC.UsersContentPath;
+
+                        //possible extensions
+                        var imageExtensions = ".jpg.png.jpeg.webp.avif";
+                        var audioExtensions = ".mp3.ogg";
+                        var videoExtensions = ".mp4.ogv.webm";
+
+                        //create content variables
+                        var extension = string.Empty;
+                        var pre = string.Empty;
+                        var fileName = string.Empty;
+                        var filePath = string.Empty;
+                        foreach(var file in files)
+                        {
+                            //get extension
+                            extension = Path.GetExtension(file.FileName);
+
+                            //get prefix
+                            pre = string.Empty;
+                            if (imageExtensions.Contains(extension)) pre = "image";
+                            if (audioExtensions.Contains(extension)) pre = "audio";
+                            if (videoExtensions.Contains(extension)) pre = "video";
+
+                            //get new file name
+                            fileName = pre + Guid.NewGuid().ToString() + extension;
+
+                            //content file path
+                            var contentFilePath = WC.UsersContentPath + fileName;
+
+                            //save new file to db
+                            filePath = Path.Combine(upload, fileName);
+                            using var fileStream = new FileStream(filePath, FileMode.Create);
+                            file.CopyTo(fileStream);
+
+                            //add file to content
+                            contentFiles.Add(new ContentFile { FilePath = contentFilePath });
+                        }
+                    }
+
                     //get topic by id
                     var topic = await _topicRepo.FirstOrDefaultAsync(t => t.Id == recordVM.TopicId);
 
@@ -208,6 +295,7 @@ namespace Kinobaza.Controllers
                         Author = HttpContext.Session.GetString("login"),
                         Text = recordVM.Text,
                         Date = DateTime.Now,
+                        Files = contentFiles,
                         Topic = topic
                     };
 
@@ -232,10 +320,21 @@ namespace Kinobaza.Controllers
             if (recordId is null) return NotFound();
 
             //get topic
-            var record = await _recordRepo.FirstOrDefaultAsync(r => r.Id == recordId);
+            var record = await _recordRepo.FirstOrDefaultAsync(r => r.Id == recordId, includeProperties: "Files");
 
             //check if record is not exists
             if (record is null) return NotFound();
+
+            //remove files from user content
+            if (record.Files is not null)
+            {
+                var filePath = string.Empty;
+                foreach (var file in record.Files) 
+                {
+                    filePath = _webHostEnvironment.WebRootPath + file.FilePath;
+                    if (System.IO.File.Exists(filePath)) System.IO.File.Delete(filePath);
+                }
+            }
 
             //remove record and save to db
             _recordRepo.Remove(record);

@@ -7,13 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="wwwroot\users\**" />
-    <Content Remove="wwwroot\users\**" />
-    <EmbeddedResource Remove="wwwroot\users\**" />
-    <None Remove="wwwroot\users\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Content Remove="Views\Shared\_Layout-login.cshtml" />
   </ItemGroup>
 
@@ -30,6 +23,10 @@
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.14" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.11" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\users\content\" />
   </ItemGroup>
 
 </Project>

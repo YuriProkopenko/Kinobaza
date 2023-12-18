@@ -10,6 +10,7 @@ namespace Kinobaza.Data
         public DbSet<User> Users { get; set; }
         public DbSet<Topic> Topics { get; set; }
         public DbSet<Record> Records { get; set; }
+        public DbSet<ContentFile> ContentFiles { get; set; }
         public KinobazaDbContext(DbContextOptions<KinobazaDbContext> options) : base(options)
         {
             if (Database.EnsureCreated())
@@ -28,7 +29,7 @@ namespace Kinobaza.Data
                     Email = "user1@gmail.com",
                     Password = "1655CCFC58214870FA45B2D346FC4640",
                     Salt = "1618CC3D9CAE3971D33680FC1DCA5F24",
-                    Status = "waiting"
+                    Status = "ok"
                 };
                 User user2 = new()
                 {
@@ -62,48 +63,8 @@ namespace Kinobaza.Data
                     Salt = "DC0607E3E58A418EBF866E9CA02A05D2",
                     Status = "waiting"
                 };
-                User user6 = new()
-                {
-                    Login = "user6",
-                    Email = "user6@gmail.com",
-                    Password = "FB7C17554C85FDBFAEE951B452BB7116",
-                    Salt = "9EE056E0E74B7DCD99245CF0860D8566",
-                    Status = "waiting"
-                };
-                User user7 = new()
-                {
-                    Login = "user7",
-                    Email = "user7@gmail.com",
-                    Password = "9C8F9113D6EC7873D23EBAA7B93234CA",
-                    Salt = "A7FFD3B31B453B8C9CCC41577BBF6BF2",
-                    Status = "waiting"
-                };
-                User user8 = new()
-                {
-                    Login = "user8",
-                    Email = "user8@gmail.com",
-                    Password = "2681B8E55367F312596CDCA0DD72457D",
-                    Salt = "FFADE8DADB60AA7503A2C733B8017788",
-                    Status = "waiting"
-                };
-                User user9 = new()
-                {
-                    Login = "user9",
-                    Email = "user9@gmail.com",
-                    Password = "C13AC2AAB72323436703D25EADDB9149",
-                    Salt = "ED2BB4E16CF6BB11E9A8F52441E60DEF",
-                    Status = "waiting"
-                };
-                User user10 = new()
-                {
-                    Login = "user10",
-                    Email = "user10@gmail.com",
-                    Password = "376A7518ACCC5FF816118DB32E03D8C0",
-                    Salt = "9A3381A07387F65E5CDFDEB1BA50446D",
-                    Status = "waiting"
-                };
 
-                Users?.AddRange(admin, user1, user2, user3, user4, user5, user6, user7, user8, user9, user10);
+                Users?.AddRange(admin, user1, user2, user3, user4, user5);
 
                 Genre drama = new() { Name = "Драма" };
                 Genre adventure = new() { Name = "Приключение" };

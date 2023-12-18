@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace Kinobaza.Models
 {
@@ -15,6 +16,8 @@ namespace Kinobaza.Models
 
         [Required]
         public DateTime Date { get; set; }
+
+        public List<ContentFile>? Files { get; set; }
 
         [Required]
         public Topic? Topic { get; set; }

@@ -47,6 +47,7 @@
     display: grid;
     grid-auto-flow: column;
     padding: 10px 0px 5px 0px;
+    margin-bottom: 35px;
     border-bottom: var(--dividing-border);
 }
 

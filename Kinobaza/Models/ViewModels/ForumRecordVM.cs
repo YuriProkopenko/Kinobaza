@@ -15,5 +15,6 @@ namespace Kinobaza.Models.ViewModels
 
         public DateTime Date { get; set; }
 
+        public List<string>? FileNames { get; set; }
     }
 }
