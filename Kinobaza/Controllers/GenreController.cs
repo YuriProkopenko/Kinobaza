@@ -1,4 +1,5 @@
 ﻿using Kinobaza.Data;
+using Kinobaza.Data.Repository.IRepository;
 using Kinobaza.Models;
 using Kinobaza.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -9,14 +10,14 @@ namespace Kinobaza.Controllers
 {
     public class GenreController : Controller
     {
-        private readonly KinobazaDbContext _context;
-        public GenreController(KinobazaDbContext context) => _context = context;
+        private readonly IGenreRepository _genreRepo ;
+        public GenreController(IGenreRepository genreRepo) => _genreRepo = genreRepo;
 
         [HttpGet]
         public async Task<IActionResult> Index()
         {
             //get all genres
-            IEnumerable<Genre> genres = await _context.Genres.ToListAsync();
+            IEnumerable<Genre> genres = await _genreRepo.GetAllAsync();
 
             //get list of genre view model
             var genreVMs = new List<GenreVM>();
@@ -39,7 +40,7 @@ namespace Kinobaza.Controllers
 
             if (id == null) return View(genreVM);
 
-            var genre = await _context.Genres.Include(g => g.Movies).FirstOrDefaultAsync(m => m.Id == id);
+            var genre = await _genreRepo.FirstOrDefaultAsync(m => m.Id == id, includeProperties: "Movies");
 
             if (genre == null) return NotFound();
 
@@ -58,16 +59,17 @@ namespace Kinobaza.Controllers
             {
                 try
                 {
-                    var temp = await _context.Genres.AsNoTracking().FirstOrDefaultAsync(m => m.Id == genreVM.Id);
+                    var temp = await _genreRepo.FirstOrDefaultAsync(m => m.Id == genreVM.Id, isTracking: false);
+
                     if (temp == null)
-                        _context.Genres.Add(new Genre { Name = genreVM.Name });
+                        await _genreRepo.AddAsync(new Genre { Name = genreVM.Name });
                     else
                     {
                         temp.Name = genreVM.Name;
-                        _context.Genres.Update(temp);
+                        _genreRepo.Update(temp);
                     }
 
-                    await _context.SaveChangesAsync();
+                    await _genreRepo.SaveAsync();
                     return RedirectToAction(nameof(Index));
                 }
                 catch { throw; }
@@ -79,10 +81,10 @@ namespace Kinobaza.Controllers
         public async Task<ActionResult> Delete(int? id)
         {
             //check if id or genres is null
-            if (id == null || _context.Genres == null) return NotFound();
+            if (id == null || await _genreRepo.GetAllAsync() == null) return NotFound();
 
             //find a genre by id and list of movies releated on it 
-            var genre = await _context.Genres.Include(g => g.Movies).FirstOrDefaultAsync(m => m.Id == id);
+            var genre = await _genreRepo.FirstOrDefaultAsync(m => m.Id == id, includeProperties: "Movies");
 
             //check if genre is not found
             if (genre == null) return NotFound();
@@ -102,20 +104,20 @@ namespace Kinobaza.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int? id)
         {
-            if(id == null || _context.Genres == null) return NotFound();
+            if(id is null || await _genreRepo.GetAllAsync() is null) return NotFound();
             try
             {
                 //check if id or genre is null
-                var genre = await _context.Genres.Include(g => g.Movies).FirstOrDefaultAsync(m => m.Id == id);
+                var genre = await _genreRepo.FirstOrDefaultAsync(g => g.Id == id, includeProperties: "Movies");
 
                 if (genre == null) return NotFound();
 
                 //if genre is not related with any movies
                 if(genre.Movies is null || genre!.Movies?.Count == 0)
-                    _context.Genres.Remove(genre);
+                    _genreRepo.Remove(genre);
                 else return NotFound();
 
-                await _context.SaveChangesAsync();
+                await _genreRepo.SaveAsync();
             }
             catch { throw; }
 

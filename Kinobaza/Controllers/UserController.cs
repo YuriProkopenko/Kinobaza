@@ -1,4 +1,5 @@
 ﻿using Kinobaza.Data;
+using Kinobaza.Data.Repository.IRepository;
 using Kinobaza.Models;
 using Kinobaza.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -13,9 +14,8 @@ namespace Kinobaza.Controllers
 {
     public class UserController : Controller
     {
-        private readonly KinobazaDbContext _context;
-
-        public UserController(KinobazaDbContext context) => _context = context;
+        private readonly IUserRepository _userRepo;
+        public UserController(IUserRepository userRepo) => _userRepo = userRepo;
 
         #region Controllers
 
@@ -45,7 +45,7 @@ namespace Kinobaza.Controllers
                     }
 
                     //check if login already exists
-                    var user = await _context.Users.FirstOrDefaultAsync(u => u.Login == userRegVM.Login);
+                    var user = await _userRepo.FirstOrDefaultAsync(u => u.Login == userRegVM.Login);
                     if (user is not null)
                     {
                         ModelState.AddModelError("", "Такой логин уже существует");
@@ -68,8 +68,8 @@ namespace Kinobaza.Controllers
                     };
 
                     //add user to db
-                    await _context.Users.AddAsync(newUser);
-                    await _context.SaveChangesAsync();
+                    await _userRepo.AddAsync(newUser);
+                    await _userRepo.SaveAsync();
 
                     //Home/Index
                     return RedirectToAction("Index", "Home");
@@ -97,12 +97,12 @@ namespace Kinobaza.Controllers
             {
                 try
                 {
-                    var user = await _context.Users.FirstOrDefaultAsync(u => u.Login == userAuthVM.Login);
+                    var user = await _userRepo.FirstOrDefaultAsync(u => u.Login == userAuthVM.Login);
 
                     //check if user is exists
                     if (user is null || user.Login is null)
                     {
-                        ModelState.AddModelError("", "Такого пользователя не существует!");
+                        ModelState.AddModelError("Login", "Такого пользователя не существует!");
                         return View(userAuthVM);
                     }
 
@@ -110,7 +110,7 @@ namespace Kinobaza.Controllers
                     var hash = HashPassword(user.Salt, userAuthVM.Password);
                     if (user.Password != hash)
                     {
-                        ModelState.AddModelError("", "Неверно введён пароль!");
+                        ModelState.AddModelError("Password", "Неверно введён пароль!");
                         return View(userAuthVM);
                     }
 
@@ -165,12 +165,14 @@ namespace Kinobaza.Controllers
             if (accounts is null) return NotFound();
 
             //create view model
-            var accountsVM = new UserAccountsVM();
-
+            var accountsVM = new UserAccountsVM
+            {
+                SearchLogin = accounts.SearchLogin
+            };
             //check if search login is exists
             if (accounts.SearchLogin is not null)
             {
-                var user = await _context.Users.FirstOrDefaultAsync(u => u.Login == accounts.SearchLogin);
+                var user = await _userRepo.FirstOrDefaultAsync(u => u.Login == accounts.SearchLogin);
                 if (user is not null)
                 {
                     accountsVM.UserAccountVMs = new List<UserAccountVM>(){ new()
@@ -189,15 +191,15 @@ namespace Kinobaza.Controllers
             else
             {
                 //get all users
-                var users = await _context.Users.ToListAsync();
+                var users = await _userRepo.GetAllAsync();
                 if (users is null) return NotFound();
 
                 //remove admin from the list
-                var admin = users.Find(u => u.Status is null);
-                if (admin is not null) users?.Remove(admin);
+                var admin = await _userRepo.FirstOrDefaultAsync(u => u.Status == null);
+                if (admin is not null) users?.ToList().Remove(admin);
 
                 var accountVMs = new List<UserAccountVM>();
-                foreach (var user in users)
+                foreach (var user in users!)
                 {
                     accountVMs.Add(new UserAccountVM()
                     {
@@ -224,7 +226,7 @@ namespace Kinobaza.Controllers
                 if (accounts is null) return NotFound();
 
                 //get user by id
-                var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == accounts.UserId);
+                var user = await _userRepo.FirstOrDefaultAsync(u => u.Id == accounts.UserId);
 
                 //check if user is null
                 if (user is null) return NotFound();
@@ -247,8 +249,8 @@ namespace Kinobaza.Controllers
 
                 //update user status and save to db
                 user.Status = changedStatus;
-                _context.Users.Update(user);
-                await _context.SaveChangesAsync();
+                _userRepo.Update(user);
+                await _userRepo.SaveAsync();
 
                 return RedirectToAction("Accounts");
             }
@@ -268,7 +270,7 @@ namespace Kinobaza.Controllers
             if (userLogin == null) return NotFound();
 
             //check if user not exists
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Login == userLogin);
+            var user = await _userRepo.FirstOrDefaultAsync(u => u.Login == userLogin);
             if (user == null) return NotFound();
 
             //create new view model
@@ -291,14 +293,14 @@ namespace Kinobaza.Controllers
                     //check if view model is null
                     if (userProfileVM is null) return NotFound();
 
-                    var user = await _context.Users.FirstOrDefaultAsync(u => u.Login == userProfileVM.Login);
+                    var user = await _userRepo.FirstOrDefaultAsync(u => u.Login == userProfileVM.Login);
                     if (user is null) return NotFound();
 
                     //check if password is correct
                     var hash = HashPassword(user.Salt, userProfileVM.Password);
                     if (user.Password != hash)
                     {
-                        ModelState.AddModelError("", "Неверно введён пароль!");
+                        ModelState.AddModelError("Password", "Неверно введён пароль!");
                         return View(userProfileVM);
                     }
 
@@ -311,8 +313,8 @@ namespace Kinobaza.Controllers
                     user.Password = hashPass;
 
                     //update user to db
-                    _context.Users.Update(user);
-                    await _context.SaveChangesAsync();
+                    _userRepo.Update(user);
+                    await _userRepo.SaveAsync();
                     return RedirectToAction("Index","Home");
                 }
                 catch { throw; }

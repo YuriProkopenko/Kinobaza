@@ -1,4 +1,5 @@
 ﻿using Kinobaza.Data;
+using Kinobaza.Data.Repository.IRepository;
 using Kinobaza.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -8,11 +9,8 @@ namespace Kinobaza.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly KinobazaDbContext _context;
-        public HomeController(KinobazaDbContext context)
-        {
-            _context = context;
-        }
+        private readonly IMovieRepository _movieRepo;
+        public HomeController(IMovieRepository movieRepo) => _movieRepo = movieRepo;
 
         public async Task<IActionResult> Index()
         {
@@ -26,7 +24,7 @@ namespace Kinobaza.Controllers
                 WC.UserLogin = cookiesLogin;
             }
 
-            IEnumerable<Movie> movies = await Task.Run(() => _context.Movies.Include(m => m.Genres).ToListAsync());
+            var movies = await _movieRepo.GetAllAsync(includeProperties: "Genres");
             return View(movies);
         }
     }

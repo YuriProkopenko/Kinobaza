@@ -1,30 +1,28 @@
-﻿using Humanizer.Localisation;
-using Kinobaza.Data;
+﻿using Kinobaza.Data.Repository.IRepository;
 using Kinobaza.Models;
 using Kinobaza.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Razor.Language.Extensions;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 
 namespace Kinobaza.Controllers
 {
     public class MovieController : Controller
     {
-        private readonly KinobazaDbContext _context;
+        private readonly IMovieRepository _movieRepo;
+        private readonly IGenreRepository _genreRepo;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public MovieController(KinobazaDbContext context, IWebHostEnvironment webHostEnvironment) 
-        { 
-            _context = context; 
+        public MovieController(IGenreRepository genreRepo, IMovieRepository movieRepo, IWebHostEnvironment webHostEnvironment) 
+        {
+            _movieRepo = movieRepo; 
+            _genreRepo = genreRepo;
             _webHostEnvironment = webHostEnvironment;
         }
 
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            IEnumerable<Movie> movies = await _context.Movies.Include(m => m.Genres).ToListAsync();
+            IEnumerable<Movie> movies = await _movieRepo.GetAllAsync(includeProperties: "Genres");
             List<MovieVM> moviesVM = new();
             foreach (var movie in movies)
             {
@@ -43,9 +41,9 @@ namespace Kinobaza.Controllers
         [HttpGet]
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Movies == null) return NotFound();
+            if (id == null || await _movieRepo.GetAllAsync() == null) return NotFound();
 
-            var movie = await _context.Movies.Include(m => m.Genres).FirstOrDefaultAsync(m => m.Id == id);
+            var movie = await _movieRepo.FirstOrDefaultAsync(m => m.Id == id, includeProperties: "Genres");
 
             if (movie == null) return NotFound();
 
@@ -55,11 +53,7 @@ namespace Kinobaza.Controllers
         [HttpGet]
         public async Task<IActionResult> Upsert(int? id)
         {
-            var genreSelectList = _context.Genres.Select(g => new SelectListItem
-            {
-                Text = g.Name,
-                Value = g.Id.ToString()
-            });
+            var genreSelectList = _genreRepo.GetSelectList();
 
             //create movieVM
             var movieVM = new MovieVM() { Items = genreSelectList, PremiereDate = new DateTime(1900, 1, 1) };
@@ -71,7 +65,7 @@ namespace Kinobaza.Controllers
             if (id == null) return View(movieVM);
 
             //get movie from db
-            var movie = await _context.Movies.Include(m => m.Genres).FirstOrDefaultAsync(m => m.Id == id);
+            var movie = await _movieRepo.FirstOrDefaultAsync(m => m.Id == id, includeProperties: "Genres");
 
             //check if movie is null
             if (movie == null) return NotFound();
@@ -98,7 +92,8 @@ namespace Kinobaza.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> UpsertConfirmed(MovieVM movieVM)
         {
-            if (movieVM == null) return NotFound();
+            //check if view model is null
+            if (movieVM is null) return NotFound();
 
             if (ModelState.IsValid)
             {
@@ -136,21 +131,21 @@ namespace Kinobaza.Controllers
                     #endregion
 
                     var genresId = movieVM?.Genres?.Select(g => int.Parse(g)).ToList();
-                    var genres = await _context.Genres.Where(g => genresId!.Any(y => y == g.Id)).ToListAsync();
+                    var genres = await _genreRepo.GetAllAsync(filter: (g => genresId!.Any(y => y == g.Id)));
 
                     var movie = new Movie()
                     {
                         TitleRU = movieVM?.TitleRu,
                         TitleEN = movieVM?.TitleEn,
                         PremiereDate = movieVM?.PremiereDate ?? new DateTime(1900, 1, 1),
-                        Genres = genres,
+                        Genres = genres.ToList(),
                         Director = movieVM?.Director,
                         Cast = movieVM?.Cast,
                         Description = movieVM?.Description,
                     };
 
                     //cheking for existence of movie
-                    var temp = await _context.Movies.Include(m => m.Genres).FirstOrDefaultAsync(m => m.Id == movieVM.MovieId);
+                    var temp = await _movieRepo.FirstOrDefaultAsync(m => m.Id == movieVM!.MovieId, includeProperties: "Genres");
 
                     //create and adding to db a new movie
                     if (temp is null)
@@ -161,7 +156,7 @@ namespace Kinobaza.Controllers
                         WC.MovieImageName = movie.Image;
 
                         //adding to db a new movie
-                        await _context.Movies.AddAsync(movie);
+                        await _movieRepo.AddAsync(movie);
                     }
                     //update db with old movie
                     else
@@ -187,21 +182,17 @@ namespace Kinobaza.Controllers
                         temp.Description = movie.Description;
 
                         //update an old movie
-                        _context.Movies.Update(temp);
+                        _movieRepo.Update(temp);
                     }
 
                     //save progress to db and return
-                    await _context.SaveChangesAsync();
+                    await _movieRepo.SaveAsync();
                     return RedirectToAction(nameof(Index));
                 }
                 catch { throw; }
             }
             //if model is not valid return to view with same movie
-            var genreSelectList = _context.Genres.Select(g => new SelectListItem
-            {
-                Text = g.Name,
-                Value = g.Id.ToString()
-            });
+            var genreSelectList = _genreRepo.GetSelectList();
             movieVM.Items = genreSelectList;
             movieVM.Image = WC.MovieImageName;
             return View(movieVM);
@@ -211,9 +202,9 @@ namespace Kinobaza.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Movies == null) return NotFound();
+            if (id is null || await _movieRepo.GetAllAsync() is null) return NotFound();
 
-            var movie = await _context.Movies.FirstOrDefaultAsync(m => m.Id == id);
+            var movie = await _movieRepo.FirstOrDefaultAsync(m => m.Id == id);
 
             if (movie == null) return NotFound();
 
@@ -224,10 +215,10 @@ namespace Kinobaza.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int? id)
         {
-            if (id == null || _context.Movies == null) return NotFound();
+            if (id is null || await _movieRepo.GetAllAsync() is null) return NotFound();
             try
             {
-                var movie = await _context.Movies.FirstOrDefaultAsync(m => m.Id == id);
+                var movie = await _movieRepo.FirstOrDefaultAsync(m => m.Id == id);
                 if (movie == null) return NotFound();
 
                 //find a path to an image directory
@@ -238,8 +229,8 @@ namespace Kinobaza.Controllers
                 if (System.IO.File.Exists(oldFile)) System.IO.File.Delete(oldFile);
 
                 //delete movie and save it to  db
-                _context.Movies.Remove(movie);
-                await _context.SaveChangesAsync();
+                _movieRepo.Remove(movie);
+                await _movieRepo.SaveAsync();
             }
             catch { throw; }
             return RedirectToAction(nameof(Index));
