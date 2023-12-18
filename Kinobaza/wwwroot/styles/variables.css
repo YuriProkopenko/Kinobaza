@@ -1,0 +1,63 @@
+/* Variables */
+
+:root {
+   /* basic */
+   --basic-black: #000000;
+   --basic-grey: rgba(0, 0, 0, 0.8);
+   --basic-grey-light: #00000099;
+   --basic-grey-extra-light: rgba(0, 0, 0, 0.1);
+   --basic-white: #ffffff;
+   --basic-lightskyblue: #27a4f1;
+   --basic-lavender: #E6E6FA;
+   --basic-darkblue: #00008B;
+   --basic-green: #31a507d2;
+   --basic-green-extra-light: #cdf4bfd2;
+   --basic-blue: #004b91c4;
+   --basic-blue-light: #0384fc;
+   --basic-blue-extra-light: rgba(187, 218, 246, 0.688);
+   --basic-red: #f80505c2;
+   --basic-red-extra-light: rgba(255, 207, 207, 0.553);
+   --basic-gold: #c4a809;
+
+   /* header */
+   --header-gradient: linear-gradient(45deg, #a8edea, #fed6e3);
+   --header-box_shadow: 0 4px 4px rgba(0, 0, 0, 0.5);
+   --header-text_shadow: 3px 2px 5px rgba(0, 0, 0, 0.55);
+   --header-link_disabled: #00008b5b;
+   --header-border-signin: 3px solid var(--basic-blue);
+   --header-border-signin-hover: 3px solid var(--basic-lightskyblue);
+
+   /* main */
+   --poster-box_shadow: 0px 7px 10px 4px rgba(0, 0, 0, 0.58);
+
+   /* footer */
+   --footer-gradient: linear-gradient(45deg, #a8edea, #fed6e3);
+   --footer-box_shadow: 0 -4px 4px rgba(0, 0, 0, 0.5);
+
+   /* popup */
+   --popup-background: #03030d7c;
+   --popup-shadow: 0px 0px 44px 15px rgba(47, 79, 158, 0.53);
+
+   /* borders */
+   --dividing-border: 1px solid rgba(0, 0, 0, 0.2);
+   --dividing-border-light: 1px solid rgba(0, 0, 0, 0.1);
+   --input-file-border: 1px solid var(--basic-blue);
+   --border-dividing-black: 1px solid var(--basic-black);
+   --border-dividing-grey: 1px solid var(--basic-grey);
+
+   /* inputs */
+   --input-border: 2px solid var(--basic-grey);
+
+   /* buttons */
+   --button-border-white: 2px solid var(--basic-white);
+   --button-border-green: 2px solid var(--basic-green);
+   --button-border-blue: 2px solid var(--basic-blue);
+   --button-border-blue-light: 2px solid var(--basic-blue-light);
+   --button-border-lightskyblue: 2px solid var(--basic-lightskyblue);
+   --button-border-red: 2px solid var(--basic-red);
+   --button-border-black: 2px solid var(--text-simple-half);
+
+   /* text */
+   --text-simple: rgba(0, 0, 0, 0.7);
+   --text-simple-half: rgba(0, 0, 0, 0.4);
+}

@@ -1,0 +1,13 @@
+/* Valid spans*/
+
+.valid-span {
+   font-weight: 300;
+   color: var(--basic-red);
+}
+
+.valid-span-summary {
+   font-weight: 300;
+   color: var(--basic-red);
+   text-align: center;
+   padding: 10px;
+}

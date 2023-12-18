@@ -1,0 +1,17 @@
+﻿@model IEnumerable<Movie>;
+
+<!--MOVIES-POSTERS-->
+<section class="movies-posters">
+
+    <!--items-->
+    <div class="movies-posters__items">
+        @foreach(var movie in Model)
+        {
+            <div class="movies-posters__item">
+                <a class="movies-posters__image" asp-controller="Movie" asp-action="Details" asp-route-id="@movie.Id">
+                    <img src="@movie.Image" alt="@movie.TitleEN">
+                </a>
+            </div>
+        }
+    </div>
+</section>

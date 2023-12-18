@@ -1,0 +1,65 @@
+/* Author */
+
+/* wrapper */
+
+.author {}
+
+/* return  */
+
+.author__return {
+   display: grid;
+   align-content: star;
+   justify-content: start;
+   padding: 35px 0px 0px 35px;
+}
+
+/* title */
+
+.author__title {
+   margin-top: 55px;
+   text-align: center;
+   font-size: 18px;
+   font-weight: 600;
+   color: var(--basic-grey);
+}
+
+/* form */
+
+.author__form {
+   max-width: 320px;
+   padding: 15px;
+   margin: 20px auto;
+}
+
+/* label */
+
+.author__label {
+   color: var(--basic-grey-light);
+   margin-left: 2px;
+}
+
+/* input */
+
+.author__input-field {
+   padding: 0px 5px 15px 5px;
+}
+
+/* buttons */
+
+.author__buttons {
+   display: grid;
+   row-gap: 15px;
+   justify-items: center;
+   align-items: center;
+   padding-top: 25px;
+}
+
+.author__buttons-confirm,
+.author__buttons-registr {
+   width: 75%;
+}
+
+.author__buttons-confirm .button:hover,
+.author__buttons-registr .button:hover {
+   padding-top: 2%;
+}

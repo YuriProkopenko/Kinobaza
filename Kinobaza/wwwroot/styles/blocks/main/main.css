@@ -1,0 +1,7 @@
+/* Main */
+
+.main {
+   display: grid;
+   grid-template: 1fr / 1fr minmax(auto, 900px) 1fr;
+   background-color: var(--basic-lavender);
+}

@@ -1,0 +1,259 @@
+/* Inputs */
+
+/* Text field */
+
+.text-field {
+   width: 100%;
+   border-radius: 3px;
+   background-color: var(--basic-white);
+}
+
+.text-field__label {
+   color: var(--basic-grey-light);
+   font-weight: 600;
+}
+
+.text-field__label,
+.text-field__input {
+   display: block;
+   padding: 3px;
+   font-family: inherit;
+   font-size: 16px;
+}
+
+.text-field__input {
+   width: 100%;
+   height: 30px;
+   font-weight: 400;
+   color: var(--basic-grey);
+   background-color: transparent;
+   border-bottom: var(--dividing-border);
+   border-radius: 3px;
+}
+
+/* File input */
+
+.file {
+   margin-top: 35px;
+   width: 150px;
+}
+
+.file__button {}
+
+.file__label {
+   width: 100%;
+   display: block;
+   cursor: pointer;
+}
+
+.file__input {
+   display: none;
+}
+
+/* Textarea */
+
+.textarea {
+   width: 100%;
+   height: 100px;
+   border-radius: 3px;
+   background-color: var(--basic-white);
+}
+
+.textarea__label {
+   color: var(--basic-grey-light);
+   font-weight: 600;
+}
+
+.textarea__label,
+.textarea__input {
+   display: block;
+   padding: 3px;
+   font-family: inherit;
+   font-size: 16px;
+}
+
+.textarea__input {
+   resize: none;
+   width: 100%;
+   height: 90%;
+   font-weight: 400;
+   color: var(--basic-grey);
+   background-color: transparent;
+   border-bottom: var(--dividing-border);
+   border-radius: 3px;
+   line-height: 1.5;
+}
+
+/* Select */
+
+.select {
+   width: 100%;
+   height: 150px;
+   background-color: transparent;
+   border-radius: 3px;
+}
+
+.select__label {
+   font-weight: 600;
+   color: var(--basic-grey-light);
+}
+
+.select__label,
+.select__input {
+   display: block;
+   padding: 3px;
+   font-family: inherit;
+   font-size: 16px;
+}
+
+.select__input {
+   width: 100%;
+   height: 90%;
+   font-weight: 400;
+   color: var(--basic-grey);
+   background-color: transparent;
+   border-bottom: var(--dividing-border);
+   border-radius: 3px;
+}
+
+.select__input option {
+   padding: 1px 0px;
+}
+
+/* Date */
+
+.date {
+   background-color: var(--basic-white);
+   border-radius: 3px;
+   max-width: 145px;
+}
+
+.date__label {
+   font-weight: 600;
+   padding: 3px;
+   color: var(--basic-grey-light);
+}
+
+.date__label,
+.date__input {
+   display: block;
+   font-family: inherit;
+   font-size: 16px;
+}
+
+.date__input {
+   padding: 8px;
+   background-color: transparent;
+   border-radius: 3px;
+   border-bottom: var(--dividing-border);
+}
+
+/* Search */
+
+.search {
+   width: 400px;
+   vertical-align: middle;
+   white-space: nowrap;
+   position: relative;
+}
+
+.search__input {
+   width: 400px;
+   height: 35px;
+   background: var(--basic-white);
+   border: var(--dividing-border);
+   color: var(--basic-grey);
+   padding: 0px 40px 0px 20px;
+   -webkit-border-radius: 20px;
+   -moz-border-radius: 20px;
+   border-radius: 20px;
+}
+
+@media(width <600px) {
+
+   .search,
+   .search__input {
+      width: 290px
+   }
+}
+
+.search__icon {
+   position: absolute;
+   width: 25px;
+   top: 10%;
+   right: 3%;
+   z-index: 1;
+   background-color: var(--basic-white);
+}
+
+/* Checkbox */
+
+.checkbox.wrapper {
+   display: inline-block;
+   position: relative;
+   padding-left: 30px;
+   cursor: pointer;
+   -webkit-user-select: none;
+   -moz-user-select: none;
+   -ms-user-select: none;
+   user-select: none;
+}
+
+.checkbox.wrapper input {
+   position: absolute;
+   opacity: 0;
+   cursor: pointer;
+   height: 0;
+   width: 0;
+}
+
+.checkbox.wrapper input:checked~.checkbox__checkmark {
+   background-color: var(--basic-grey-extra-light);
+}
+
+.checkbox.wrapper input:checked~.checkbox__checkmark:after {
+   transform: scale(1);
+}
+
+.checkbox.wrapper input:checked~.checkbox__body {
+   font-weight: bold;
+}
+
+.checkbox.wrapper:hover input~.checkbox__checkmark {
+   background-color: var(--basic-grey-extra-light);
+}
+
+.checkbox.wrapper:hover input:checked~.checkbox__checkmark {
+   background-color: var(--basic-grey-extra-light);
+}
+
+.checkbox.wrapper .checkbox__checkmark {
+   position: absolute;
+   top: 1px;
+   left: 0;
+   height: 22px;
+   width: 22px;
+   background-color: var(--basic-grey-extra-light);
+   transition: background-color 0.25s ease;
+   border-radius: 11px;
+}
+
+.checkbox.wrapper .checkbox__checkmark:after {
+   content: "";
+   position: absolute;
+   left: 0px;
+   top: 0px;
+   width: 22px;
+   height: 22px;
+   display: block;
+   background-color: #f7cb15;
+   border-radius: 50%;
+   transform: scale(0);
+   transition: transform 0.25s ease;
+}
+
+.checkbox.wrapper .checkbox__body {
+   color: #333;
+   line-height: 1.4;
+   font-size: 16px;
+}

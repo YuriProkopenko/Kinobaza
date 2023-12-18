@@ -1,0 +1,11 @@
+/* Page */
+
+.page {
+   position: relative;
+   overflow-x: hidden;
+   min-height: 100%;
+   display: grid;
+   grid-template: min-content 1fr min-content / 1fr;
+   font-family: "Mplus1p", sans-serif;
+   font-size: 16px;
+}

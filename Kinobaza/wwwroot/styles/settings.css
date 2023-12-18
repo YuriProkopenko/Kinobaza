@@ -1,0 +1,16 @@
+/* Settings */
+
+.elements {
+   background-color: var(--basic-grey-extra-light);
+}
+
+.elements>* {
+   display: grid;
+   padding: 35px;
+}
+
+/* Inputs */
+
+.inputs>* {
+   margin-bottom: 35px;
+}

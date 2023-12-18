@@ -1,0 +1,22 @@
+/* Header */
+
+.header {
+   display: grid;
+   grid-template: 1fr / 1fr minmax(auto, 200px) minmax(auto, 1000px) 1fr;
+   position: relative;
+   padding: 5px 20px 5px 20px;
+   background: var(--header-gradient);
+   align-items: center;
+   box-shadow: var(--header-box_shadow);
+   z-index: 2;
+}
+
+.header__logo {
+   grid-column: 2 / 3;
+   max-width: 100px;
+   padding: 10px 0px;
+}
+
+.header__menu {
+   grid-column: 3 / 4;
+}

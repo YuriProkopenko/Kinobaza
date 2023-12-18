@@ -1,0 +1,43 @@
+/* Genres-delete */
+
+/* wrapper */
+
+.genres-delete {
+   display: grid;
+   grid-template: minmax(50px, 100px) 1fr / 1fr;
+   padding: 50px 15px;
+}
+
+/* title */
+
+.genres-delete__title {
+   display: grid;
+   align-content: center;
+   justify-content: center;
+}
+
+.genres-delete__title p {
+   font-size: 18px;
+   font-weight: 600;
+   color: var(--basic-grey);
+   text-align: center;
+   padding-top: 10px;
+}
+
+/* form */
+
+.genres-delete__form {
+   display: grid;
+   justify-content: center;
+   padding-top: 25px;
+}
+
+/* buttons */
+
+.genres-delete__buttons {
+   display: grid;
+   grid-auto-flow: column;
+   column-gap: 30px;
+   justify-self: center;
+   align-content: center;
+}

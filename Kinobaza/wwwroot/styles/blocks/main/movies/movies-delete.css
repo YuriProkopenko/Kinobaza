@@ -1,0 +1,43 @@
+/* Movies-delete */
+
+/* wrapper */
+
+.movies-delete {
+   display: grid;
+   grid-template: minmax(50px, 100px) 1fr / 1fr;
+   padding: 50px;
+}
+
+/* title */
+
+.movies-delete__title {
+   display: grid;
+   align-content: center;
+   justify-content: center;
+}
+
+.movies-delete__title p {
+   font-size: 18px;
+   font-weight: 600;
+   color: var(--basic-grey);
+   text-align: center;
+   padding-top: 10px;
+}
+
+/* form */
+
+.movies-delete__form {
+   display: grid;
+   justify-content: center;
+   padding-top: 25px;
+}
+
+/* buttons */
+
+.movies-delete__buttons {
+   display: grid;
+   grid-auto-flow: column;
+   column-gap: 30px;
+   justify-self: center;
+   align-content: center;
+}

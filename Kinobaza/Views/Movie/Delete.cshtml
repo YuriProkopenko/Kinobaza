@@ -1,0 +1,25 @@
+﻿@model Kinobaza.Models.Movie
+
+<!-- Movies-delete -->
+<section class="movies-delete">
+
+    <!--title-->
+    <div class="movies-delete__title">
+        <p>Удалить фильм</p>
+        <p>"@Model.TitleRU"?</p>
+    </div>
+
+    <!--form-->
+    <form class="movies-delete__form" asp-action="Delete">
+
+        <!--buttons-->
+        <div class="movies-delete__buttons">
+            <div class="buttons__cancel-btn">
+                <a class="button button--red" asp-action="Index">нет</a>
+            </div>
+            <div class="buttons__confirm-btn">
+                <input class="button button--green" type="submit" value="да">
+            </div>
+        </div>
+    </form>
+</section>

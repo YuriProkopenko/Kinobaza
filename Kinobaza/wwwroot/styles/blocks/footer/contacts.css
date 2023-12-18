@@ -1,0 +1,19 @@
+/* Contacts */
+
+.contacts {
+   display: grid;
+   justify-content: end;
+}
+
+.contacts__list {
+   display: grid;
+   grid-auto-flow: column;
+   column-gap: 20px;
+}
+
+.contacts__list li {}
+
+.contacts__link img {
+   width: calc(32px + 2 * (100vw / 1280));
+   height: calc(32px + 2 * (100vw / 1280));
+}

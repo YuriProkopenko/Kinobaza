@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kinobasa</title>
+    <link rel="stylesheet" href="~/styles/index.css" asp-append-version="true">
+</head>
+
+<!--BODY-->
+<body class="page">
+
+    <!--HEADER-->
+    <header class="header">
+
+        <!--Logo-->
+        <div class="header__logo">
+            <a asp-controller="Home" asp-action="Index">
+                <img src="/images/logo/kinobaza-logo.svg" alt="logo_svg">
+            </a>
+        </div>
+
+        <!--Menu-->
+        <nav class="header__menu menu">
+            <ul class="menu__list">
+                <li class="dropdown">
+                    <span class="menu__link dropdown__menu menu__link--dropdown">Контент</span>
+                    <ul class="dropdown__child">
+                        <li><a asp-controller="Genre" asp-action="Index">Жанры</a></li>
+                        <li><a asp-controller="Movie" asp-action="Index">Фильмы</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <button class="menu__button">
+                <span></span><span></span><span></span>
+            </button>
+        </nav>
+    </header>
+
+    <!--MAIN-->
+    <section class="main">
+        <section class="content">
+            @RenderBody()
+        </section>
+    </section>
+
+    <!--FOOTER-->
+    <footer class="footer">
+        <div class="footer__copy">
+            <p>&#169; 2023 - Kinobaza</p>
+        </div>
+        <div class="footer__contacts contacts">
+            <ul class="contacts__list">
+                <li>
+                    <a href="#" class="contacts__link">
+                        <img src="/images/icons/contacts/email.svg" alt="email_svg">
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="contacts__link">
+                        <img src="/images/icons/contacts/telegramm.svg" alt="telegramm_svg">
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </footer>
+
+    <!--Scripts-->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script defer src="~/scripts/index.js"></script>
+</body>
+
+</html>

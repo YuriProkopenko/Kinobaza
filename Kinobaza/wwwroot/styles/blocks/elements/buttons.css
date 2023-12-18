@@ -1,0 +1,90 @@
+/* Buttons */
+
+.button {
+   width: 100%;
+   color: var(--basic-white);
+   font-size: 14px;
+   font-weight: 600;
+   border-radius: 20px;
+   padding: 8px 15px;
+   transition-duration: 0.3s;
+   display: block;
+   text-align: center;
+   cursor: pointer;
+}
+
+.button:hover {
+   background-color: var(--basic-white);
+}
+
+/* Green */
+
+.button--green {
+   background-color: var(--basic-green);
+   border: var(--button-border-green);
+}
+
+.button--green:hover {
+   color: var(--basic-green);
+}
+
+/* Blue */
+
+.button--blue {
+   background-color: var(--basic-blue-light);
+   border: var(--button-border-blue-light);
+}
+
+.button--blue:hover {
+   color: var(--basic-blue-light);
+}
+
+/* Red */
+
+.button--red {
+   background-color: var(--basic-red);
+   border: var(--button-border-red);
+}
+
+.button--red:hover {
+   color: var(--basic-red);
+}
+
+/* Return */
+
+.button--return {
+   border: var(--button-border-blue);
+   color: var(--basic-blue);
+   background-color: var(--basic-white);
+}
+
+.button--return:hover {
+   border: var(--button-border-lightskyblue);
+   color: var(--basic-lightskyblue);
+}
+
+/* Create, Edit, Delete, Cancel, Confirm, Return */
+
+.buttons__create-btn,
+.buttons__edit-btn,
+.buttons__delete-btn {
+   width: 100px;
+}
+
+.buttons__confirm-btn,
+.buttons__cancel-btn {
+   width: 100px;
+}
+
+.buttons__return-btn {
+   width: 200px;
+}
+
+.buttons__create-btn,
+.buttons__edit-btn,
+.buttons__delete-btn,
+.buttons__confirm-btn,
+.buttons__cancel-btn,
+.buttons__return-btn {
+   margin: 5px;
+}

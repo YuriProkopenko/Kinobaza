@@ -1,0 +1,9 @@
+/* Content */
+
+.content {
+   grid-column: 2 / 3;
+   height: 100%;
+   background-color: var(--basic-white);
+   border-left: var(--dividing-border-light);
+   border-right: var(--dividing-border-light);
+}

@@ -1,0 +1,91 @@
+/* Genres-list */
+
+/* wrapper */
+
+.genres-list {
+   display: grid;
+   grid-template: repeat(2, minmax(auto, 50px)) 1fr / 1fr;
+   padding: 15px;
+}
+
+@media(width<500px) {
+   .genres-list {
+      padding: 0px;
+   }
+}
+
+/* title */
+
+.genres-list__title {
+   grid-row: 1 / 2;
+   align-self: center;
+   justify-self: center;
+}
+
+.genres-list__title p {
+   font-size: 18px;
+   font-weight: 600;
+   color: var(--basic-grey);
+}
+
+/* create */
+.genres-list__button {
+   display: grid;
+   grid-row: 2 / 3;
+   justify-content: end;
+   align-content: center;
+   margin: 0px 25px;
+}
+
+@media(width<500px) {
+   .genres-list__button {
+      margin: 0px 5px;
+   }
+}
+
+/* items */
+
+.genres-list__items {
+   grid-row: 3 / 3;
+   padding: 5px 25px;
+}
+
+@media(width <500px) {
+   .genres-list__items {
+      padding: 5px 5px 0px 10px;
+   }
+}
+
+.genres-list__items li {
+   display: grid;
+   grid-auto-flow: column;
+   padding-top: 25px;
+   align-items: center;
+}
+
+/* name */
+
+.genres-list__name {
+   font-size: 16px;
+   font-weight: 400;
+   color: var(--basic-grey);
+}
+
+/* buttons */
+
+.genres-list__buttons {
+   display: grid;
+   grid-auto-flow: column;
+   column-gap: 5px;
+   justify-self: end;
+   align-content: center;
+}
+
+.genres-list__buttons--row {}
+
+@media(width <500px) {
+   .genres-list__buttons--row {
+      grid-auto-flow: row;
+      row-gap: 5px;
+   }
+}

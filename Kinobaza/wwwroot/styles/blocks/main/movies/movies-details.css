@@ -1,0 +1,95 @@
+/* Movie details */
+
+.movies-details {
+   display: grid;
+   grid-template: minmax(auto, 80px) 1fr / 1fr;
+}
+
+.movies-details__back {
+   align-self: center;
+   padding: 15px 0px 20px 15px;
+}
+
+.movies-details__main {
+   display: grid;
+   padding: 15px;
+   font-family: "Mplus1p", sans-serif;
+   font-weight: 400;
+   font-size: 16px;
+}
+
+@media(width >600px) {
+   .movies-details__main {
+      grid-template: 1fr / minmax(auto, 300px) 1fr;
+   }
+}
+
+.movies-details__image {}
+
+@media(width >600px) {
+   .movies-details__image {
+      position: relative;
+      padding: 0px 0px 90% 0px;
+      margin: 0px;
+   }
+
+   .movies-details__image img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+   }
+}
+
+.movies-details__info {
+   display: grid;
+   line-height: 150%;
+   letter-spacing: 110%;
+}
+
+@media(width <600px) {
+   .movies-details__info {
+      padding-top: 35px;
+   }
+}
+
+@media(width >=600px) {
+   .movies-details__info {
+      padding-left: 15px;
+      font-size: 16px;
+   }
+}
+
+.movies-details__title {
+   padding-bottom: 5px;
+}
+
+.movies-details__title--ru {
+   font-size: 24px;
+}
+
+.movies-details__title--en {
+   font-size: 18px;
+   color: var(--text-simple);
+   padding-bottom: 10px;
+}
+
+.movies-details__date {
+   padding-bottom: 25px;
+}
+
+.movies-details__genres {
+   padding-bottom: 15px;
+}
+
+.movies-details__director {
+   padding-bottom: 15px;
+}
+
+.movies-details__cast {
+   padding-bottom: 15px;
+}
+
+.movies-details__desc {}

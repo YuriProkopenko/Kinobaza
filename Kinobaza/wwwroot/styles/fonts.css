@@ -1,0 +1,75 @@
+/* Monoton Regular 400*/
+
+@font-face {
+   font-family: 'Monoton';
+   font-style: normal;
+   font-weight: 400;
+   font-display: swap;
+   src: url('../fonts/Monoton/Monoton-Regular.woff2') format('woff2'),
+      url('../fonts/Monoton/Monoton-Regular.ttf') format('ttf'),
+      url('../fonts/Monoton/Monoton-Regular.woff') format('woff'),
+      url('../fonts/Monoton/Monoton-Regular.svg') format('svg'),
+      url('../fonts/Monoton/Monoton-Regular.otf') format('otf'),
+      url('../fonts/Monoton/Monoton-Regular.eot') format('eot');
+   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* Mplus1p Light 300 */
+
+@font-face {
+   font-family: 'Mplus1p';
+   font-style: normal;
+   font-weight: 300;
+   font-display: swap;
+   src: url('../fonts/Mplus1p/Mplus1p-Light.woff2') format('woff2'),
+      url('../fonts/Mplus1p/Mplus1p-Light.ttf') format('ttf'),
+      url('../fonts/Mplus1p/Mplus1p-Light.woff') format('woff'),
+      url('../fonts/Mplus1p/Mplus1p-Light.svg') format('svg'),
+      url('../fonts/Mplus1p/Mplus1p-Light.eot') format('otf');
+   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* Mplus1p Regular 400 */
+
+@font-face {
+   font-family: 'Mplus1p';
+   font-style: normal;
+   font-weight: 400;
+   font-display: swap;
+   src: url('../fonts/Mplus1p/Mplus1p-Regular.woff2') format('woff2'),
+      url('../fonts/Mplus1p/Mplus1p-Regular.ttf') format('ttf'),
+      url('../fonts/Mplus1p/Mplus1p-Regular.woff') format('woff'),
+      url('../fonts/Mplus1p/Mplus1p-Regular.svg') format('svg'),
+      url('../fonts/Mplus1p/Mplus1p-Regular.eot') format('otf');
+   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* Mplus1p Medium 500 */
+
+@font-face {
+   font-family: 'Mplus1p';
+   font-style: normal;
+   font-weight: 500;
+   font-display: swap;
+   src: url('../fonts/Mplus1p/Mplus1p-Medium.woff2') format('woff2'),
+      url('../fonts/Mplus1p/Mplus1p-Medium.ttf') format('ttf'),
+      url('../fonts/Mplus1p/Mplus1p-Medium.woff') format('woff'),
+      url('../fonts/Mplus1p/Mplus1p-Medium.svg') format('svg'),
+      url('../fonts/Mplus1p/Mplus1p-Medium.eot') format('otf');
+   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* Mplus1p Bold 700 */
+
+@font-face {
+   font-family: 'Mplus1p';
+   font-style: normal;
+   font-weight: 700;
+   font-display: swap;
+   src: url('../fonts/Mplus1p/Mplus1p-Bold.woff2') format('woff2'),
+      url('../fonts/Mplus1p/Mplus1p-Bold.ttf') format('ttf'),
+      url('../fonts/Mplus1p/Mplus1p-Bold.woff') format('woff'),
+      url('../fonts/Mplus1p/Mplus1p-Bold.svg') format('svg'),
+      url('../fonts/Mplus1p/Mplus1p-Bold.eot') format('otf');
+   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}

@@ -1,0 +1,62 @@
+/* Global */
+
+@import 'fonts.css';
+@import 'reset.css';
+@import 'variables.css';
+@import 'settings.css';
+
+/* Blocks */
+
+/* Wrapper */
+
+@import 'blocks/wrapper/page.css';
+
+/* Header*/
+
+@import 'blocks/header/header.css';
+@import 'blocks/header/logo.css';
+@import 'blocks/header/menu.css';
+
+
+/* Main */
+
+@import 'blocks/main/main.css';
+@import 'blocks/main/content.css';
+@import 'blocks/main/login.css';
+@import 'blocks/main/logout.css';
+@import 'blocks/main/comments.css';
+
+/* Movies */
+
+@import 'blocks/main/movies/movies-delete.css';
+@import 'blocks/main/movies/movies-details.css';
+@import 'blocks/main/movies/movies-list.css';
+@import 'blocks/main/movies/movies-posters.css';
+@import 'blocks/main/movies/movies-upsert.css';
+
+/* Genres */
+
+@import 'blocks/main/genres/genres-delete.css';
+@import 'blocks/main/genres/genres-list.css';
+@import 'blocks/main/genres/genres-upsert.css';
+
+/* Login */
+@import 'blocks/main/login/author.css';
+@import 'blocks/main/login/logout.css';
+@import 'blocks/main/login/registr.css';
+@import 'blocks/main/login/accounts.css';
+
+/* Footer */
+
+@import 'blocks/footer/footer.css';
+@import 'blocks/footer/contacts.css';
+
+/* Elements */
+
+@import 'blocks/elements/buttons.css';
+@import 'blocks/elements/inputs.css';
+@import 'blocks/elements/valid-spans.css';
+
+/* Popup */
+
+@import 'blocks/popup/popup.css';

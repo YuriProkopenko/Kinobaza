@@ -1,0 +1,108 @@
+﻿@model MovieVM;
+
+<!-- Movies-upsert -->
+<section class="movies-upsert">
+
+    <!-- header -->
+    <div class="movies-upsert__header">
+
+        <!-- back -->
+        <div class="movies-upsert__back">
+            <a class="button button--return" asp-action="Index">вернуться к списку</a>
+        </div>
+
+        <!-- title -->
+        @if (Model!.MovieId != 0)
+        {
+            <p class="movies-upsert__title">Редактировать данные "@Model.TempTitle"?</p>
+        }
+        else
+        {
+            <p class="movies-upsert__title">Добавить новый фильм?</p>
+        }
+    </div>
+
+    <!-- form -->
+    <form class="movies-upsert__form" asp-action="Upsert" method="post" enctype="multipart/form-data">
+        @if (Model.MovieId != 0)
+        {
+            <input type="hidden" asp-for="MovieId" />
+        }
+
+        <!-- image -->
+        <div class="movies-upsert__image image">
+            <div class="image__poster">
+                <img src=@Model.Image alt="@Model.TitleEn">
+            </div>
+
+            <!-- file -->
+            <div class="movies-upsert__file file">
+                <div class="file__button button button--blue">
+                    <label class="file__label" for="uploadBox">Выбрать постер</label>
+                </div>
+                <input class="file__input" type="file" id="uploadBox" name="files">
+            </div>
+        </div>
+
+        <!-- info -->
+        <article class="movies-upsert__info">
+
+            <!-- titleRU -->
+            <div class="movies-upsert__text-field text-field">
+                <label class="text-field__label" asp-for="TitleRu">Название фильма на русском* :</label>
+                <input class="text-field__input text-input" asp-for="TitleRu" value="@Model.TitleRu">
+                <span class="valid-span" asp-validation-for="TitleRu"></span>
+            </div>
+
+            <!--titleEN-->
+            <div class="movies-upsert__text-field text-field">
+                <label class="text-field__label" asp-for="TitleEn">Название фильма на английском :</label>
+                <input class="text-field__input text-input" asp-for="TitleEn" value="@Model.TitleEn">
+            </div>
+
+            <!--date-->
+            <div class="movies-upsert__date date">
+                <label class="date__label" asp-for="PremiereDate">Дата премьеры* :</label>
+                <input class="date__input" type="date" asp-for="PremiereDate" value="@Model.PremiereDate.Value.ToString("yyyy-MM-dd")">
+                <span class="valid-span" asp-validation-for="PremiereDate"></span>
+            </div>
+
+            <!--genres-->
+            <div class="movies-upsert__select select">
+                <label class="select__label" asp-for="Genres">Выберите жанры* :</label>
+                <select class="select__input" asp-for="Genres" asp-items="Model.Items" multiple></select>
+                <span class="valid-span" asp-validation-for="Genres"></span>
+            </div>
+
+            <!--director-->
+            <div class="movies-upsert__text-field text-field">
+                <label class="text-field__label" asp-for="Director">Режиссёр* :</label>
+                <input class="text-field__input text-input" asp-for="Director" type="text" value="@Model.Director">
+                <span class="valid-span" asp-validation-for="Director"></span>
+            </div>
+
+            <!--cast-->
+            <div class="movies-upsert__textarea textarea">
+                <label class="textarea__label" asp-for="Cast">В ролях* :</label>
+                <textarea class="textarea__input" asp-for="Cast" value="@Model.Cast"></textarea>
+                <span class="valid-span" asp-validation-for="Cast"></span>
+            </div>
+
+            <!--desc-->
+            <div class="movies-upsert__textarea textarea textarea--description">
+                <label class="textarea__label" asp-for="Description">Описание</label>
+                <textarea class="textarea__input" asp-for="Description" value="@Model.Description"></textarea>
+            </div>
+        </article>
+
+        <!--buttons-->
+        <div class="movies-upsert__buttons">
+            <div class="buttons__cancel-btn">
+                <a class="button button--red" asp-action="Index">отменить</a>
+            </div>
+            <div class="buttons__confirm-btn">
+                <input class="button button--green" type="submit" value="да">
+            </div>
+        </div>
+    </form>
+</section>

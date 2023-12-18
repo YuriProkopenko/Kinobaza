@@ -1,0 +1,63 @@
+/* Author */
+
+/* wrapper */
+
+.registr {}
+
+/* return  */
+
+.registr__return {
+   display: grid;
+   align-content: star;
+   justify-content: start;
+   padding: 35px 0px 0px 35px;
+}
+
+/* title */
+
+.registr__title {
+   margin-top: 55px;
+   text-align: center;
+   font-size: 18px;
+   font-weight: 600;
+   color: var(--basic-grey);
+}
+
+/* form */
+
+.registr__form {
+   max-width: 320px;
+   padding: 15px;
+   margin: 20px auto;
+}
+
+/* label */
+
+.registr__label {
+   color: var(--basic-grey);
+   margin-left: 2px;
+}
+
+/* input */
+
+.registr__input-field {
+   padding: 0px 5px 15px 5px;
+}
+
+/* buttons */
+
+.registr__buttons {
+   display: grid;
+   row-gap: 15px;
+   justify-items: center;
+   align-items: center;
+   padding-top: 25px;
+}
+
+.registr__buttons-confirm {
+   width: 70%;
+}
+
+.registr__buttons-confirm .button:hover {
+   padding-top: 2%;
+}

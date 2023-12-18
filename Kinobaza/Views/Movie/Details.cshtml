@@ -1,0 +1,72 @@
+﻿@model Kinobaza.Models.Movie;
+
+<!-- Movies-details -->
+<section class="movies-details">
+
+    <!-- back -->
+    <div class="movies-details__back">
+        <div class="buttons__return-btn">
+            <a class="button button--return" asp-controller="Home" asp-action="Index">вернуться назад</a>
+        </div>
+    </div>
+
+    <!-- main -->
+    <article class="movies-details__main">
+
+        <!-- image -->
+        <div class="movies-details__image">
+            <img src=@Model.Image alt="@Model.TitleEN">
+        </div>
+
+        <!--info-->
+        <article class="movies-details__info">
+
+            <!-- title-RU -->
+            <div class="movies-details__title movies-details__title--ru">
+                <span>@Model.TitleRU</span>
+            </div>
+
+            <!-- title-EN -->
+            <div class="movies-details__title movies-details__title--en">
+                <span>@Model.TitleEN</span>
+            </div>
+
+            <!-- date -->
+            <div class="movies-details__date">
+                <span>Премьера в мире: @Model.PremiereDate!.Value.ToString("d MMMM yyyy")</span>
+            </div>
+
+            <!-- genres -->
+            <div class="movies-details__genres">
+                <span>Жанр: </span>
+                @for(int i = 0; i < Model?.Genres?.Count; i++)
+                {
+                    if (i == Model?.Genres?.Count - 1)
+                    {
+                        <span>@Model?.Genres[i].Name</span>
+                    }
+                    else
+                    {
+                        <span>@Model?.Genres[i].Name, </span>
+                    }
+                }
+            </div>
+
+            <!-- director -->
+            <div class="movies-details__director">
+                <span>Режисёр: @Model?.Director</span>
+            </div>
+
+            <!-- cast -->
+            <div class="movies-details__cast">
+                <span>В ролях: @Model?.Cast</span>
+            </div>
+
+            <!-- desc -->
+            <div class="movies-details__desc">
+                <span>@Model?.Description</span>
+            </div>
+        </article>
+    </article>
+</section>
+

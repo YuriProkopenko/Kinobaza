@@ -1,0 +1,50 @@
+/* Genres-upsert */
+
+/* wrapper */
+
+.genres-upsert {
+   display: grid;
+   grid-template: minmax(50px, 100px) 1fr / 1fr;
+   padding-top: 50px;
+}
+
+/* title */
+
+.genres-upsert__title {
+   display: grid;
+   align-content: center;
+   justify-content: center;
+}
+
+.genres-upsert__title p {
+   font-size: 18px;
+   font-weight: 600;
+   color: var(--basic-grey);
+}
+
+/* form */
+
+.genres-upsert__form {
+   display: grid;
+   justify-content: center;
+   padding-top: 25px;
+}
+
+/* text-field */
+
+.genres-upsert__text-field {
+   min-width: 250px;
+   padding-bottom: 35px;
+}
+
+/* buttons */
+
+.genres-upsert__buttons {
+   display: grid;
+   grid-auto-flow: column;
+   column-gap: 30px;
+   justify-self: center;
+   align-content: center;
+}
+
+.genres-upsert__buttons--row {}
