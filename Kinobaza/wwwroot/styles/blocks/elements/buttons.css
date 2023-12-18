@@ -67,10 +67,7 @@
 
 .buttons__create-btn,
 .buttons__edit-btn,
-.buttons__delete-btn {
-   width: 100px;
-}
-
+.buttons__delete-btn,
 .buttons__confirm-btn,
 .buttons__cancel-btn {
    width: 100px;

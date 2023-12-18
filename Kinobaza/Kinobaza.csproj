@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\users\**" />
+    <Content Remove="wwwroot\users\**" />
+    <EmbeddedResource Remove="wwwroot\users\**" />
+    <None Remove="wwwroot\users\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="Views\Shared\_Layout-login.cshtml" />
   </ItemGroup>
 

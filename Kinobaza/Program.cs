@@ -16,6 +16,9 @@ builder.Services.AddDbContext<KinobazaDbContext>(options => options.UseSqlServer
 builder.Services.AddScoped<IGenreRepository, GenreRepository>();
 builder.Services.AddScoped<IMovieRepository, MovieRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<ITopicRepository, TopicRepository>();
+builder.Services.AddScoped<IRecordRepository, RecordRepository>();
+
 
 var app = builder.Build();
 

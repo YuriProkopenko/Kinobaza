@@ -8,13 +8,13 @@
     <link rel="stylesheet" href="~/styles/index.css" asp-append-version="true">
 </head>
 
-<!--BODY-->
+<!-- Body -->
 <body class="page">
 
-    <!--HEADER-->
+    <!-- Header -->
     <header class="header">
 
-        <!--Logo-->
+        <!-- Logo -->
         <div class="header__logo">
             <a asp-controller="Home" asp-action="Index" >
                 <img src="/images/logo/kinobaza-logo.svg" alt="logo_svg">
@@ -24,6 +24,9 @@
         <!-- Menu -->
         <nav class="header__menu menu">
             <ul class="menu__list">
+
+                <!-- forum -->
+                <li><a asp-controller="Forum" asp-action="Topics" class="menu__link">Форум</a></li>
 
                 @if (WC.UserLogin == "admin")
                 {
@@ -94,6 +97,7 @@
 
     <!--Scripts-->
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script defer src="~/scripts/jquery.js"></script>
     <script defer src="~/scripts/index.js"></script>
 </body>
 

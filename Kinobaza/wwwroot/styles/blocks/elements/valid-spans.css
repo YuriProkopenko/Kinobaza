@@ -1,13 +1,19 @@
 /* Valid spans*/
 
 .valid-span {
+   display: grid;
+   align-items: center;
+   justify-self: start;
+   padding-left: 5px;
    font-weight: 300;
    color: var(--basic-red);
+   width: 100%;
+   height: 25px;
 }
 
 .valid-span-summary {
    font-weight: 300;
    color: var(--basic-red);
    text-align: center;
-   padding: 10px 0px 35px 0px;
+   padding: 10px;
 }

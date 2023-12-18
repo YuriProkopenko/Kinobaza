@@ -2,57 +2,56 @@
 
 /* wrapper */
 
-.author {
-}
+.author {}
 
 /* return  */
 
 .author__return {
-    display: grid;
-    align-content: center;
-    justify-content: start;
-    padding: 35px 0px 0px 35px;
+   display: grid;
+   align-content: start;
+   justify-content: start;
+   padding: 35px 0px 0px 35px;
 }
 
 /* title */
 
 .author__title {
-    margin-top: 55px;
-    text-align: center;
-    font-size: 18px;
-    font-weight: 600;
-    color: var(--basic-grey);
+   margin-top: 55px;
+   text-align: center;
+   font-size: 18px;
+   font-weight: 600;
+   color: var(--basic-grey);
 }
 
 /* form */
 
 .author__form {
-    display: grid;
-    justify-items: center;
-    width: 290px;
-    padding-top: 55px;
-    margin: 0px auto;
+   display: grid;
+   justify-items: center;
+   width: 290px;
+   padding-top: 55px;
+   margin: 0px auto;
 }
 
 /* label */
 
 .author__label {
-    color: var(--basic-grey-light);
-    margin-left: 2px;
+   color: var(--basic-grey-light);
+   margin-left: 2px;
 }
 
 /* input */
 
 .author__input-field {
-    width: 100%;
-    padding: 0px 5px 15px 5px;
+   width: 100%;
+   padding: 0px 5px 15px 5px;
 }
 
 /* buttons */
 
 .author__buttons {
-    display: grid;
-    row-gap: 15px;
-    width: 200px;
-    padding-top: 35px;
+   display: grid;
+   row-gap: 15px;
+   width: 200px;
+   padding-top: 35px;
 }

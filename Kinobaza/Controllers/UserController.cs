@@ -165,10 +165,8 @@ namespace Kinobaza.Controllers
             if (accounts is null) return NotFound();
 
             //create view model
-            var accountsVM = new UserAccountsVM
-            {
-                SearchLogin = accounts.SearchLogin
-            };
+            var accountsVM = new UserAccountsVM();
+
             //check if search login is exists
             if (accounts.SearchLogin is not null)
             {

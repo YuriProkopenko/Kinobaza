@@ -1,0 +1,53 @@
+﻿/* Record-create */
+
+
+.record-create {
+    display: grid;
+}
+
+/* toolbar */
+
+.record-create__toolbar {
+    display: grid;
+    padding: 25px;
+}
+
+/* return */
+
+.record-create__return-btn {
+    align-self: center;
+    width: 200px;
+}
+
+.record-create__form {
+    display: grid;
+    padding: 5px 35px 25px 35px;
+    margin: 15px 0px;
+    border-radius: 5px;
+}
+
+/* record textarea */
+
+.record-create__textarea {
+    height: 200px;
+    padding-top: 5px;
+}
+
+/* record footer */
+
+.record__footer {
+    display: grid;
+    grid-auto-flow: column;
+}
+
+.record-create__file {
+    padding: 5px 0px;
+}
+
+/* create record button  */
+
+.record-create__buttons {
+    display: grid;
+    justify-content: end;
+    align-content: center;
+}

@@ -1,0 +1,33 @@
+﻿@model ForumRecordVM
+
+<!-- Record-create -->
+<section class="record-create">
+
+    <!-- toolbar -->
+    <div class="record-create__toolbar">
+
+        <!-- back -->
+        <div class="record-create__return-btn">
+            <a class="button button--return" asp-controller="Forum" asp-action="Topic" asp-route-id="@TempData["TopicId"]">назад</a>
+        </div>
+    </div>
+
+    <form class="record-create__form" asp-action="RecordCreate" method="post" enctype="multipart/form-data">
+        <input type="hidden" value="@TempData["TopicId"]" asp-for="TopicId" />
+
+        <!-- record textarea -->
+        <div class="record-create__textarea">
+            <textarea class="textarea__input" asp-for="Text" placeholder="Новая запись..."></textarea>
+            <span class="valid-span" asp-validation-for="Text"></span>
+        </div>
+
+        <!-- record footer -->
+        <div class="record__footer">
+
+            <!-- buttons -->
+            <div class="record-create__buttons">
+                <input class="button button--green" type="submit" value="записать" />
+            </div>
+        </div>
+    </form>
+</section>

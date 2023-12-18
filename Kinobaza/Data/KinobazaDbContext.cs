@@ -8,6 +8,8 @@ namespace Kinobaza.Data
         public DbSet<Genre> Genres {  get; set; }
         public DbSet<Movie> Movies { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<Topic> Topics { get; set; }
+        public DbSet<Record> Records { get; set; }
         public KinobazaDbContext(DbContextOptions<KinobazaDbContext> options) : base(options)
         {
             if (Database.EnsureCreated())

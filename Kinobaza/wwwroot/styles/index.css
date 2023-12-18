@@ -22,9 +22,6 @@
 
 @import 'blocks/main/main.css';
 @import 'blocks/main/content.css';
-@import 'blocks/main/login.css';
-@import 'blocks/main/logout.css';
-@import 'blocks/main/comments.css';
 
 /* Movies */
 
@@ -41,12 +38,21 @@
 @import 'blocks/main/genres/genres-upsert.css';
 
 /* Login */
-
 @import 'blocks/main/login/author.css';
 @import 'blocks/main/login/logout.css';
 @import 'blocks/main/login/registr.css';
 @import 'blocks/main/login/accounts.css';
+@import 'blocks/main/login/waiting.css';
+@import 'blocks/main/login/banned.css';
 @import 'blocks/main/login/profile.css';
+
+/* Forum */
+@import 'blocks/forum/forum-topics.css';
+@import 'blocks/forum/forum-topic-create.css';
+@import 'blocks/forum/forum-topic.css';
+@import 'blocks/forum/forum-topic-delete.css';
+@import 'blocks/forum/forum-record-create.css';
+
 
 /* Footer */
 
@@ -58,7 +64,3 @@
 @import 'blocks/elements/buttons.css';
 @import 'blocks/elements/inputs.css';
 @import 'blocks/elements/valid-spans.css';
-
-/* Popup */
-
-@import 'blocks/popup/popup.css';

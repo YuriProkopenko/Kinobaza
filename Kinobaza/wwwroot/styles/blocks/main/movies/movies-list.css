@@ -32,9 +32,9 @@
 /* items */
 
 .movies__items {
-    padding-top: 35px;
-    display: grid;
-    grid-row: 2 / 2;
+   padding-top: 35px;
+   display: grid;
+   grid-row: 2 / 2;
 }
 
 /* item */
@@ -42,8 +42,8 @@
 .movies__item {
    display: grid;
    grid-auto-flow: column;
+   padding: 10px 0px;
    border-bottom: var(--dividing-border);
-   padding: 5px 0px;
 }
 
 /* body */

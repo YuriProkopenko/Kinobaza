@@ -1,57 +1,57 @@
-﻿/* Profile */
+/* Profile */
 
 /* wrapper */
 
 .profile {
-    padding-bottom: 55px;
+   padding-bottom: 55px;
 }
 
 /* return  */
 
 .profile__return {
-    display: grid;
-    align-content: start;
-    justify-content: start;
-    padding: 35px 0px 0px 35px;
+   display: grid;
+   align-content: star;
+   justify-content: start;
+   padding: 35px 0px 0px 35px;
 }
 
 /* title */
 
 .profile__title {
-    margin-top: 15px;
-    text-align: center;
-    font-size: 18px;
-    font-weight: 600;
-    color: var(--basic-grey);
+   margin-top: 15px;
+   text-align: center;
+   font-size: 18px;
+   font-weight: 600;
+   color: var(--basic-grey);
 }
 
 /* form */
 
 .profile__form {
-    display: grid;
-    justify-items: center;
-    width: 290px;
-    padding-top: 55px;
-    margin: 0px auto;
+   display: grid;
+   justify-items: center;
+   width: 290px;
+   padding-top: 55px;
+   margin: 0px auto;
 }
 
 /* label */
 
 .profile__label {
-    color: var(--basic-grey);
-    margin-left: 2px;
+   color: var(--basic-grey);
+   margin-left: 2px;
 }
 
 /* input */
 
 .profile__input-field {
-    width: 100%;
-    padding: 0px 5px 35px 5px;
+   width: 100%;
+   padding: 0px 5px 35px 5px;
 }
 
 /* buttons */
 
 .profile__buttons {
-    width: 200px;
-    padding: 15px 0px;
+   width: 200px;
+   padding: 15px 0px;
 }

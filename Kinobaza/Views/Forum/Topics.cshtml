@@ -1,0 +1,65 @@
+﻿@model ForumTopicsVM
+
+
+<!-- Topics -->
+
+<section class="topics">
+
+    <!-- Toolbar-->
+    <div class="topics__toolbar">
+
+        <!-- return -->
+        <div class="topics__return-btn">
+            <a class="button button--return" asp-controller="Home" asp-action="Index">на главную</a>
+        </div>
+
+        @if (Model.Login is not null)
+        {
+            <!--button create-->
+            <div class="topics__create-btn">
+                <a class="button button--green" asp-action="TopicCreate">новая тема</a>
+            </div>
+        }
+    </div>
+
+    <h1 class="topics__title">Форум</h1>
+
+    <!--items-->
+    <ul class="topics__items">
+
+        @if (Model.Topics is not null)
+        {
+            @foreach (var topic in Model.Topics)
+            {
+                <!--item-->
+                <li class="topics__topic-item">
+
+                    <!-- body -->
+                    <div class="topic-item__body">
+
+                        <!--info-->
+                        <div class="topic-item__info">
+                            <a asp-action="Topic" asp-route-id="@topic.Id">
+                                <p class="topic-item__name">@topic.Title</p>
+                            </a>
+                            <p class="topic-item__author">@topic.Author</p>
+                            <p class="topic-item__date">@topic.Date</p>
+                            <p class="topic-item__records">@topic.RecordsVM?.Count()</p>
+                        </div>
+                    </div>
+
+                    @if (Model.Login == "admin")
+                    {
+                        <!--buttons-->
+                        <div class="topic-item__buttons">
+                            <div class="topic-item__buttons-delete">
+                                <a class="button button--red" asp-action="TopicDelete" asp-route-id="@topic.Id">удалить</a>
+                            </div>
+                        </div>
+                    }
+                </li>
+            }
+        }
+    </ul>
+
+</section>

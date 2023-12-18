@@ -2,55 +2,54 @@
 
 /* wrapper */
 
-.registr {
-}
+.registr {}
 
 /* return  */
 
 .registr__return {
-    display: grid;
-    align-content: center;
-    justify-content: start;
-    padding: 35px 0px 0px 35px;
+   display: grid;
+   align-content: star;
+   justify-content: start;
+   padding: 35px 0px 0px 35px;
 }
 
 /* title */
 
 .registr__title {
-    margin-top: 55px;
-    text-align: center;
-    font-size: 18px;
-    font-weight: 600;
-    color: var(--basic-grey);
+   margin-top: 55px;
+   text-align: center;
+   font-size: 18px;
+   font-weight: 600;
+   color: var(--basic-grey);
 }
 
 /* form */
 
 .registr__form {
-    display: grid;
-    justify-items: center;
-    width: 290px;
-    padding-top: 55px;
-    margin: 0px auto;
+   display: grid;
+   justify-items: center;
+   width: 290px;
+   padding-top: 55px;
+   margin: 0px auto;
 }
 
 /* label */
 
 .registr__label {
-    color: var(--basic-grey);
-    margin-left: 2px;
+   color: var(--basic-grey);
+   margin-left: 2px;
 }
 
 /* input */
 
 .registr__input-field {
-    width: 100%;
-    padding: 0px 5px 15px 5px;
+   width: 100%;
+   padding: 0px 5px 15px 5px;
 }
 
 /* buttons */
 
 .registr__buttons {
-    width: 200px;
-    padding-top: 35px 0px;
+   width: 200px;
+   padding-top: 35px;
 }

@@ -9,24 +9,12 @@
             <!-- search form -->
             <form asp-action="Accounts" method="get">
 
-@*                 <!-- search -->
+                <!-- search -->
                 <div class="accounts__search">
                     <div class="search">
                     <input class="search__input" type="text" asp-for="SearchLogin" maxlength="20" />
                     </div>
                 </div>
- *@
-            <!-- search -->
-            <div class="accounts__search">
-                <div class="search">
-                    <button class="search__icon" type="submit">
-                        <img src="/images/icons/search_user.svg"
-                             alt="search">
-                    </button>
-                    <input class="search__input" type="text" asp-for="SearchLogin" maxlength="20">
-                </div>
-            </div>
-
             </form>
 
             <!-- checkboxes -->
@@ -131,7 +119,7 @@
                         <p></p>
                     </div>
                     <div class="accounts__email">
-                        <p class="valid-span">Пользователя с логином "@Model.SearchLogin" не найдено!</p>
+                        <p>Пользователь не найден!</p>
                     </div>
                     <div class="accounts__status">
                         <p></p>

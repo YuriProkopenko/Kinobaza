@@ -1,0 +1,45 @@
+﻿@model ForumTopicVM
+
+<!-- Topic-create -->
+<section class="topic-create">
+
+    <!-- toolbar -->
+    <div class="topic-create__toolbar">
+
+        <!-- back -->
+        <div class="topic-create__return-btn">
+            <a class="button button--return" asp-action="Topics">назад к списку</a>
+        </div>
+    </div>
+
+    <!-- title -->
+    <p class="topic-create__title">Создание новой темы</p>
+
+    <!-- info -->
+    <article class="topic-create__info">
+        <!-- form -->
+        <form class="topic-create__form" asp-action="TopicCreate" method="post" enctype="multipart/form-data">
+
+            <!-- name -->
+            <div class="topic-create__text-field text-field">
+                <label class="text-field__label" asp-for="Title">Название темы* :</label>
+                <input class="text-field__input" asp-for="Title">
+                <span class="valid-span" asp-validation-for="Title"></span>
+            </div>
+
+            <!-- description -->
+            <div class="topic-create__textarea">
+                <label class="textarea__label" asp-for="Description">Описание темы :</label>
+                <textarea class="textarea__input" asp-for="Description"></textarea>
+            </div>
+
+            <!-- footer -->
+            <div class="topic-create__footer">
+
+                <!-- buttons -->
+                <div class="topic-create__buttons">
+                    <input class="button button--green" type="submit" value="создать тему" />
+            </div>
+        </form>
+    </article>
+</section>

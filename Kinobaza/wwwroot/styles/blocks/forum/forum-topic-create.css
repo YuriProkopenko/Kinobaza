@@ -1,0 +1,77 @@
+﻿/* Forum-topic-create */
+
+.topic-create {
+    display: grid;
+}
+
+/* toolbar */
+
+.topic-create__toolbar {
+    display: grid;
+    padding: 25px;
+}
+
+/* return */
+
+.topic-create__return-btn {
+    align-self: center;
+    width: 200px;
+}
+
+/* title */
+
+.topic-create__title {
+    align-self: center;
+    justify-self: center;
+    font-size: 20px;
+    padding: 20px 0px 45px 0px;
+}
+
+/* info */
+
+.topic-create__info {
+    display: grid;
+    width: 500px;
+    justify-self: center;
+}
+
+/* form */
+
+.topic-create__form {
+}
+
+    .topic-create__form > * {
+        width: 100%;
+        font-family: "Mplus1p", sans-serif;
+        font-weight: 400;
+        font-size: 16px;
+    }
+
+.topic-create__text-field {
+    display: grid;
+}
+
+/* text-field */
+.topic-create__textarea {
+    height: 250px;
+    padding: 25px 0px;
+}
+
+/* footer */
+.topic-create__footer {
+    display: grid;
+    grid-auto-flow: column;
+}
+
+/* file */
+
+.topic-create__file {
+}
+
+/* buttons */
+
+.topic-create__buttons {
+    display: grid;
+    justify-content: end;
+    align-content: center;
+}

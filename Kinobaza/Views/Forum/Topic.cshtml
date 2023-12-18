@@ -1,0 +1,76 @@
+﻿@model ForumTopicVM
+
+<!-- forum topic -->
+
+<section class="forum-topic">
+
+    <!-- Toolbar-->
+    <div class="forum-topic__toolbar">
+
+        <!-- return -->
+        <div class="forum-topic__return-btn">
+            <a class="button button--return" asp-action="Topics">назад к списку</a>
+        </div>
+
+        @if (Model.Login is not null)
+        {
+            <!--button create-->
+            <div class="forum-topic__create-btn">
+                <a class="button button--green" asp-action="RecordCreate">новая запись</a>
+            </div>
+        }
+    </div>
+
+    <!-- title -->
+    <h1 class="forum-topic__title">@Model.Title</h1>
+
+    <!-- description -->
+
+    <div class="forum-topic__desc">@Model.Description</div>
+
+    <!-- items -->
+
+    <ul class="forum-topic__topic">
+        @if (Model.RecordsVM is not null) {
+            @foreach (var recordVM in Model.RecordsVM)
+            {
+                <!-- item -->
+                <li class="topic">
+
+                        <!-- body -->
+                        <div class="topic__body">
+
+                            <!--info-->
+                            <div class="topic__info">
+                                <div class="topic__header">
+
+                                    <!-- date -->
+                                    <div class="topic__author-date">
+                                        <span>@recordVM.Author</span><span> - @recordVM.Date</span>
+                                    </div>
+
+                                    @if (Model.Login == "admin")
+                                    {
+
+                                        <form asp-action="RecordDelete" method="post">
+                                            <input type="hidden" name="recordId" value="@recordVM.Id"/>
+
+                                            <!--buttons-->
+                                            <div class="topic__buttons">
+                                                <div class="topic__buttons-delete">
+                                                    <input class="button button--red" type="submit" value="удалить запись"/>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    }
+                                </div>
+
+                                <!-- text -->
+                                <div class="topic__desc">@recordVM.Text</div>
+                            </div>
+                        </div>
+                </li>
+            }
+        }
+    </ul>
+</section>
