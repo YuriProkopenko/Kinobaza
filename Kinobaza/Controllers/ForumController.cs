@@ -1,349 +1,345 @@
-﻿using Kinobaza.Data.Repository.IRepository;
+﻿using AutoMapper;
+using Kinobaza.BLL.DTO;
+using Kinobaza.BLL.Interfaces;
+using Kinobaza.DAL.Entities;
 using Kinobaza.Models;
 using Kinobaza.Models.ViewModels;
-using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using NuGet.Packaging.Signing;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Kinobaza.Controllers
 {
     public class ForumController : Controller
     {
-        private readonly ITopicRepository _topicRepo;
-        private readonly IRecordRepository _recordRepo;
+        private readonly IForumService _forumServ;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public ForumController(ITopicRepository topicRepo, IRecordRepository recordRepo, IWebHostEnvironment webHostEnvironment)
+        public ForumController(IForumService forumServ, IWebHostEnvironment webHostEnvironment)
         {
-            _topicRepo = topicRepo;
-            _recordRepo = recordRepo;
+            _forumServ = forumServ;
             _webHostEnvironment = webHostEnvironment;
         }
 
+        // GET: Forum/Topics
         [HttpGet]
         public async Task<IActionResult> Topics()
         {
-            //get all topics
-            var topics = await _topicRepo.GetAllAsync(includeProperties: "Records");
-
-            //create new list of topic view models
-            List<ForumTopicVM> topicVM = new();
-
-            //check if topics exists fill list of view model
-            if (topics is not null)
+            try
             {
-                foreach (var topic in topics)
+                //get all topics
+                var topics = await _forumServ.GetAllTopics();
+
+                //create new list of topic view models
+                IEnumerable<ForumTopicVM> topicVMs = new List<ForumTopicVM>();
+
+                //check if topics exists
+                if (topics is not null)
                 {
-                    //fill topicsVM list
-                    topicVM.Add(new ForumTopicVM()
-                    {
-                        Id = topic.Id,
-                        Login = HttpContext.Session.GetString("login"),
-                        Title = topic.Title,
-                        Description = topic.Description,
-                        Author = topic.Author,
-                        Date = topic.Date,
-                        RecordsCount = topic.Records?.Count
-                    });
+                    var config = new MapperConfiguration(cfg => cfg.CreateMap<TopicDTO, ForumTopicVM>());
+                    var mapper = new Mapper(config);
+                    topicVMs = mapper.Map<IEnumerable<TopicDTO>, IEnumerable<ForumTopicVM>>(topics);
                 }
+
+                return View(topicVMs);
             }
-
-            //create view model
-            var topicsVM = new ForumTopicsVM()
-            {
-                Login = HttpContext.Session.GetString("login"),
-                Topics = topicVM
-            };
-
-            return View(topicsVM);
+            catch { return NotFound(); }
         }
 
+        // GET: Forum/Create
         [HttpGet]
-        public IActionResult TopicCreate()
+        public IActionResult Create()
         {
-            return View();
-        }
-
-        [HttpPost, ActionName("TopicCreate")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> TopicCreateConfirmed(ForumTopicVM? topicVM)
-        {
-            //cxheck if viw model is null
-            if(topicVM is null) return NotFound();
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    //create new topic
-                    var topic = new Topic()
-                    {
-                        Title = topicVM.Title,
-                        Description = topicVM.Description,
-                        Author = HttpContext.Session.GetString("login"),
-                        Date = DateTime.Now,
-                        Records = new List<Record>()
-                    };
-
-                    await _topicRepo.AddAsync(topic);
-                    await _topicRepo.SaveAsync();
-
-                    return RedirectToAction(nameof(Topics));
-                }
-                catch { throw; }
-            }
-
-            return View();
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> TopicDelete(int? id)
-        {
-            //check if id is null
-            if(id is null) return NotFound();
-
-            //get topic by id
-            var topic = await _topicRepo.FirstOrDefaultAsync(t => t.Id == id);
-
-            //check if topic is null
-            if(topic is null) return NotFound();
-
             //create view model
-            var topicVM = new ForumTopicVM() { Title = topic.Title };
+            var topicVM = new ForumTopicVM();
 
             return View(topicVM);
         }
 
-        [HttpPost, ActionName("TopicDelete")]
+        // POST: Forum/Create
+        [HttpPost, ActionName("Create")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> TopicDeleteConfirmed(ForumTopicVM? topicVM)
+        public async Task<IActionResult> CreateConfirmed(ForumTopicVM topicVM)
         {
             try
             {
-                //check if id or topic is null
-                if (topicVM is null || await _topicRepo.GetAllAsync() is null) return NotFound();
-                var topic = await _topicRepo.FirstOrDefaultAsync(t => t.Id == topicVM.Id, includeProperties: "Records");
-                if (topic is null) return NotFound();
+                if (ModelState.IsValid)
+                {
+                    //create topic DTO
+                    var topicDTO = new TopicDTO()
+                    {
+                        Title = topicVM.Title,
+                        Description = topicVM.Description,
+                        Author = HttpContext.Session.GetString("login"),
+                        Date = DateTime.Now
+                    };
 
-                //get records of topic
-                var records = await _recordRepo.GetAllAsync(r => r.TopicId == topic.Id, includeProperties: "Files");
+                    await _forumServ.CreateTopic(topicDTO);
+
+                    return RedirectToAction(nameof(Topics));
+                }
+            }
+            catch { throw; }
+
+            return View(topicVM);
+        }
+
+        // GET: Forum/Delete/id
+        [HttpGet]
+        public async Task<IActionResult> Delete(int? id)
+        {
+            try
+            {
+                //check if id is null
+                if (id is null) return NotFound();
+
+                //get a topic dto by id
+                var topicDTO = await _forumServ.GetTopicById((int)id);
+
+                //check if topic is null
+                if (topicDTO is null) return NotFound();
+
+                //create view model
+                ForumTopicVM topicVM = new()
+                {
+                    Id = topicDTO.Id,
+                    Title = topicDTO.Title
+                };
+
+                return View(topicVM);
+            }
+            catch { return NotFound(); }
+        }
+
+        // POST: Forum/Delete/id
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int? id)
+        {
+            try
+            {
+                //check if id is null
+                if (id is null) return NotFound();
+
+                //check if topic dto is exists
+                var topicDTO = await _forumServ.GetTopicById((int)id);
+                if (topicDTO is null) return NotFound();
 
                 //remove content of this topic
-                var contentFilesPath = new List<string>();
-                if (records is not null)
-                    foreach (var record in records)
+                var recordDTOs = await _forumServ.GetTopicRecords((int)id);
+                if (recordDTOs is not null)
+                    foreach (var recordDTO in recordDTOs)
                     {
-                        if (record.Files is not null)
-                            foreach (var contentFile in record.Files)
-                            {
-                                if(contentFile.FilePath is not null)
-                                    contentFilesPath.Add(contentFile.FilePath);
-                            }
+                        DeleteFiles(_webHostEnvironment, recordDTO.ContentPaths);
                     }
-                //find a path to an file content directory
-                var webRootPath = _webHostEnvironment.WebRootPath;
-                foreach (var contentFile in contentFilesPath)
-                {
-                    var oldFile = webRootPath + contentFile;
-                    if (System.IO.File.Exists(oldFile)) System.IO.File.Delete(oldFile);
-                }
 
-                //remove records and topics
-                _topicRepo.Remove(topic);
-                await _topicRepo.SaveAsync();
+                //remove topic
+                await _forumServ.DeleteTopic((int)id);
             }
             catch { throw; }
 
             return RedirectToAction(nameof(Topics));
         }
 
+        // GET: Forum/Topic/id
         [HttpGet]
-        public async Task<IActionResult> Topic(int? id) 
-        { 
-            //check if id is null
-            if (id is null) return NotFound();
-
-            //get topic by id from db
-            var topic = await _topicRepo.FirstOrDefaultAsync(t => t.Id == id, includeProperties: "Records");
-            var records = await _recordRepo.GetAllAsync(r => r.Topic!.Id == id, includeProperties: "Files");
-
-            //check if topic is null
-            if (topic is null) return NotFound();
-
-            TempData["TopicId"] = id;
-
-            //get recordsVM
-            var recordsVM = new List<ForumRecordVM>();
-            foreach (var record in records) 
+        public async Task<IActionResult> Topic(int? id)
+        {
+            try
             {
-                //get content files
-                var fileNames = new List<string>();
-                if (record.Files is not null)
+                //check if id is null
+                if (id is null) return NotFound();
+
+                //get topic DTO by id from db
+                var topicDTO = await _forumServ.GetTopicById((int)id);
+
+                //check if topic is null
+                if (topicDTO is null) return NotFound();
+
+                //save topic id to temp data
+                TempData["TopicId"] = id;
+
+                //get records view models
+                var recordDTOs = await _forumServ.GetTopicRecords((int)id);
+                IEnumerable<ForumRecordVM> recordVMs = new List<ForumRecordVM>();
+                if (recordDTOs is not null)
                 {
-                    foreach (var contentFile in record.Files)
-                    {
-                        if (contentFile is not null && contentFile.FilePath is not null)
-                        {
-                            fileNames.Add(contentFile.FilePath);
-                        }
-                    }
+                    var config = new MapperConfiguration(cfg => cfg.CreateMap<RecordDTO, ForumRecordVM>());
+                    var mapper = new Mapper(config);
+                    recordVMs = mapper.Map<IEnumerable<RecordDTO>, IEnumerable<ForumRecordVM>>(recordDTOs);
+                }
+                foreach (var recordVM in recordVMs)
+                {
+                    var contentPathsList = recordVM.ContentPaths?.Split(' ');
+                    recordVM.ContentPathsList = contentPathsList;
                 }
 
-                recordsVM.Add(new ForumRecordVM()
+                //create view model
+                ForumTopicVM topicVM = new()
                 {
-                    Id = record.Id,
-                    Author = record.Author,
-                    Text = record.Text,
-                    Date = record.Date,
-                    FileNames = fileNames
-                }); ;
+                    Id = topicDTO.Id,
+                    Title = topicDTO.Title,
+                    Author = topicDTO.Author,
+                    Date = topicDTO.Date,
+                    Description = topicDTO.Description,
+                    RecordVMs = recordVMs
+                };
+
+                return View(topicVM);
             }
-
-            //create view model
-            var topicVM = new ForumTopicVM()
-            {
-                Id = topic.Id,
-                Login = HttpContext.Session.GetString("login"),
-                Title = topic.Title,
-                Author = topic.Author,
-                Date = topic.Date,
-                Description = topic.Description,
-                RecordsVM = recordsVM
-            };
-
-            return View(topicVM);
+            catch { return NotFound(); }
         }
 
+        // GET: Forum/RecordCreate
         [HttpGet]
-        public IActionResult RecordCreate() 
-        { 
-            return View();
+        public IActionResult RecordCreate()
+        {
+            //create view model
+            var recordVM = new ForumRecordVM();
+
+            return View(recordVM);
         }
 
+        // POST: Forum/RecordCreate
         [HttpPost, ActionName("RecordCreate")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> RecordCreateConfirmed(ForumRecordVM? recordVM)
+        public async Task<IActionResult> RecordCreateConfirmed(ForumRecordVM recordVM)
         {
-            //check if topic view model is null
-            if (recordVM is null) return NotFound();
-
-            TempData["TopicId"] = recordVM.TopicId;
-
-            if (ModelState.IsValid)
+            try
             {
-                try
+                if (ModelState.IsValid)
                 {
-                    //checking for uploaded files
+                    //check if Tempdata of topic id is not exists
+                    if (TempData["TopicId"] is not int topicId)
+                        return NotFound();
+
+                    //check if topic is exists
+                    var topicDTO = await _forumServ.GetTopicById(topicId);
+                    if (topicDTO is null) return NotFound();
+
+                    //apload files if exists
+                    IEnumerable<string> aploadedFiles = new List<string>();
                     var files = HttpContext.Request.Form.Files;
-
-                    //create content files
-                    var contentFiles = new List<ContentFile>();
-
-                    //if files is not empty save files
                     if (files is not null)
+                        aploadedFiles = await UploadFilesAsync(_webHostEnvironment, files);
+
+                    //add files to string
+                    var contentPaths = string.Empty;
+                    foreach (var file in aploadedFiles)
                     {
-                        //find a path to the users content directory
-                        var webRootPath = _webHostEnvironment.WebRootPath;
-                        var upload = webRootPath + WC.UsersContentPath;
-
-                        //possible extensions
-                        var imageExtensions = ".jpg.png.jpeg.webp.avif";
-                        var audioExtensions = ".mp3.ogg";
-                        var videoExtensions = ".mp4.ogv.webm";
-
-                        //create content variables
-                        var extension = string.Empty;
-                        var pre = string.Empty;
-                        var fileName = string.Empty;
-                        var filePath = string.Empty;
-                        foreach(var file in files)
-                        {
-                            //get extension
-                            extension = Path.GetExtension(file.FileName);
-
-                            //get prefix
-                            pre = string.Empty;
-                            if (imageExtensions.Contains(extension)) pre = "image";
-                            if (audioExtensions.Contains(extension)) pre = "audio";
-                            if (videoExtensions.Contains(extension)) pre = "video";
-
-                            //get new file name
-                            fileName = pre + Guid.NewGuid().ToString() + extension;
-
-                            //content file path
-                            var contentFilePath = WC.UsersContentPath + fileName;
-
-                            //save new file to db
-                            filePath = Path.Combine(upload, fileName);
-                            using var fileStream = new FileStream(filePath, FileMode.Create);
-                            file.CopyTo(fileStream);
-
-                            //add file to content
-                            contentFiles.Add(new ContentFile { FilePath = contentFilePath });
-                        }
+                        contentPaths += " " + file;
                     }
 
-                    //get topic by id
-                    var topic = await _topicRepo.FirstOrDefaultAsync(t => t.Id == recordVM.TopicId);
-
-                    //check if topic is null
-                    if (topic is null) return NotFound();
-
-                    //create new record
-                    var record = new Record
+                    //create new record DTO
+                    var recordDTO = new RecordDTO
                     {
+                        TopicId = topicDTO.Id,
                         Author = HttpContext.Session.GetString("login"),
                         Text = recordVM.Text,
                         Date = DateTime.Now,
-                        Files = contentFiles,
-                        Topic = topic
+                        ContentPaths = contentPaths
                     };
 
                     //add record to topic
-                    topic.Records?.Add(record);
+                    topicDTO.RecordDTOs?.Add(recordDTO);
 
                     //save changes to db
-                    _topicRepo.Update(topic);
-                    await _topicRepo.SaveAsync();
+                    await _forumServ.UpdateTopic(topicDTO);
 
-                    return RedirectToAction("Topic", new { id = recordVM.TopicId });
+                    return RedirectToAction("Topic", new { id = topicId });
                 }
-                catch { throw; }
+                return View(recordVM);
             }
-            return View();
+            catch { throw; }
         }
 
+        // POST: Forum/RecordDelete/id
         [HttpPost]
         public async Task<IActionResult> RecordDelete(int? recordId)
         {
-            //check if view model is null
-            if (recordId is null) return NotFound();
+            try
+            {
+                //check if view model is null
+                if (recordId is null) return NotFound();
 
-            //get topic
-            var record = await _recordRepo.FirstOrDefaultAsync(r => r.Id == recordId, includeProperties: "Files");
+                //remove content
+                var contentPaths = await _forumServ.GetRecordsContentPaths((int)recordId);
+                DeleteFiles(_webHostEnvironment, contentPaths);
 
-            //check if record is not exists
-            if (record is null) return NotFound();
+                //delete record
+                await _forumServ.DeleteRecord((int)recordId);
 
-            //remove files from user content
-            if (record.Files is not null)
+                var id = (int?)TempData["TopicId"];
+                return RedirectToAction(nameof(Topic), new { Id = id });
+            }
+            catch { return NotFound(); }    
+        }
+
+        private static async Task<IEnumerable<string>> UploadFilesAsync(IWebHostEnvironment whEnv, IEnumerable<IFormFile> files)
+        {
+            try
+            {
+                var uploadedFiles = new List<string>();
+
+                //get path
+                var webRootPath = whEnv.WebRootPath;
+                var upload = webRootPath + @"\users\content\";
+
+                //possible extensions
+                var imageExtensions = ".jpg.png.jpeg.webp.avif";
+                var audioExtensions = ".mp3.ogg";
+                var videoExtensions = ".mp4.ogv.webm";
+
+                //create content variables
+                var extension = string.Empty;
+                var pre = string.Empty;
+                var fileName = string.Empty;
+                var filePath = string.Empty;
+                foreach (var file in files)
+                {
+                    //get extension
+                    extension = Path.GetExtension(file.FileName);
+
+                    //get prefix
+                    if (imageExtensions.Contains(extension)) pre = "image";
+                    if (audioExtensions.Contains(extension)) pre = "audio";
+                    if (videoExtensions.Contains(extension)) pre = "video";
+
+                    //get new file name
+                    fileName = pre + Guid.NewGuid().ToString() + extension;
+
+                    //content file path
+                    string contentFilePath = @"\users\content\" + fileName;
+
+                    //save new file to db
+                    filePath = Path.Combine(upload, fileName);
+                    using var fileStream = new FileStream(filePath, FileMode.Create);
+                    await file.CopyToAsync(fileStream);
+
+                    //add file to list
+                    uploadedFiles.Add(contentFilePath);
+                }
+
+                return uploadedFiles;
+            }
+            catch { throw; }
+        }
+
+        private static void DeleteFiles(IWebHostEnvironment whEnv, string? contentPaths)
+        {
+            if (contentPaths is not null)
             {
                 var filePath = string.Empty;
-                foreach (var file in record.Files) 
+                var contentPathsList = contentPaths.Split(" ");
+                foreach (var contentPath in contentPathsList)
                 {
-                    filePath = _webHostEnvironment.WebRootPath + file.FilePath;
-                    if (System.IO.File.Exists(filePath)) System.IO.File.Delete(filePath);
+                    if (contentPath.Length > 0)
+                    {
+                        filePath = whEnv.WebRootPath + contentPath;
+                        if (System.IO.File.Exists(filePath)) System.IO.File.Delete(filePath);
+                    }
                 }
             }
-
-            //remove record and save to db
-            _recordRepo.Remove(record);
-            await _recordRepo.SaveAsync();
-
-            int? topicId = (int)TempData["TopicId"];
-
-            return RedirectToAction(nameof(Topic), new { Id = topicId });
         }
     }
-
 }

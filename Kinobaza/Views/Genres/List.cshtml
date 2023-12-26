@@ -1,0 +1,36 @@
+﻿@model IEnumerable<GenreVM>
+
+<!-- Genres-list -->
+<section class="genres-list">
+
+    <!--title-->
+    <div class="genres-list__title">
+        <p>Жанры</p>
+
+    </div>
+
+    <!--button create-->
+    <div class="genres-list__button">
+        <div class="buttons__create-btn">
+            <a class="button button--green" asp-action="Upsert">добавить</a>
+        </div>
+    </div>
+
+    <!--items-->
+    <ul class="genres-list__items">
+        @foreach (var genreVM in Model)
+        {
+            <li>
+                <div class="genres-list__name">@genreVM.Name</div>
+                <div class="genres-list__buttons genres-list__buttons--row">
+                    <div class="buttons__edit-btn">
+                        <a class="button button--blue" asp-action="Upsert" asp-route-id="@genreVM.Id">изменить</a>
+                    </div>
+                    <div class="buttons__delete-btn">
+                        <a class="button button--red" asp-action="Delete" asp-route-id="@genreVM.Id">удалить</a>
+                    </div>
+                </div>
+            </li>
+        }
+    </ul>
+</section>

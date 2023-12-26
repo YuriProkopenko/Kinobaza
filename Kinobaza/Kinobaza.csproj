@@ -11,9 +11,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Views\User\Authorization.cshtml" />
-    <None Include="Views\User\Logout.cshtml" />
-    <None Include="Views\User\Registration.cshtml" />
+    <None Include="Views\Users\Authorization.cshtml" />
+    <None Include="Views\Users\Logout.cshtml" />
+    <None Include="Views\Users\Registration.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -27,6 +27,10 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\users\content\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Kinobaza.BLL\Kinobaza.BLL.csproj" />
   </ItemGroup>
 
 </Project>

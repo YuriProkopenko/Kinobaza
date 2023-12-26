@@ -1,25 +1,30 @@
-using Kinobaza.Data;
-using Kinobaza.Data.Repository;
-using Kinobaza.Data.Repository.IRepository;
 using Microsoft.EntityFrameworkCore;
+using Kinobaza.BLL.Interfaces;
+using Kinobaza.BLL.Services;
+using Kinobaza.BLL.Infrastructure;
 
+
+//builder
 var builder = WebApplication.CreateBuilder(args);
+
+//mvc service
 builder.Services.AddControllersWithViews();
 
+//session provider
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession();
 
+//connection provider
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<KinobazaDbContext>(options => options.UseSqlServer(connectionString));
+if(connectionString is not null) builder.Services.AddKinobazaDBContext(connectionString);
 
-//Repository pattern
-builder.Services.AddScoped<IGenreRepository, GenreRepository>();
-builder.Services.AddScoped<IMovieRepository, MovieRepository>();
-builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<ITopicRepository, TopicRepository>();
-builder.Services.AddScoped<IRecordRepository, RecordRepository>();
+//repository provider
+builder.Services.AddUnitOfWorkService();
 
+//application services provider
+builder.Services.AddApplicationServicesService();
 
+//application
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())

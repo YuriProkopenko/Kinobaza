@@ -1,0 +1,55 @@
+﻿@model IEnumerable<MovieVM>
+
+<!-- Movies -->
+<section class="movies">
+
+    <!-- Toolbar-->
+    <div class="movies__toolbar">
+
+        <!-- return -->
+        <div class="movies__return-btn">
+            <a class="button button--return" asp-controller="Home" asp-action="Index">на главную</a>
+        </div>
+
+        <!--button create-->
+        <div class="movies__create-btn">
+            <a class="button button--green" asp-action="Upsert">добавить</a>
+        </div>
+    </div>
+
+    <!--items-->
+    <div class="movies__items">
+        @foreach(var movieVM in Model)
+        {
+            <!-- item -->
+            <div class="movies__item">
+
+                <!-- body -->
+                <div class="movies__body">
+
+                    <!-- image -->
+                    <div class="movies__image">
+                        <img src=@movieVM.Poster alt="@movieVM.TitleEn">
+                    </div>
+
+                    <!-- info -->
+                    <div class="movies__info">
+                        <p class="movies__title--ru">@movieVM.TitleRu</p>
+                        <p class="movies__title--en">@movieVM.TitleEn</p>
+                        <p class="movies__date">@movieVM.PremiereDate!.Value.ToString("d MMMM yyyy")</p>
+                    </div>
+                </div>
+
+                <!-- buttons -->
+                <div class="movies__buttons">
+                    <div class="movies__buttons-edit">
+                        <a class="button button--blue" asp-action="Upsert" asp-route-id="@movieVM.Id">изменить</a>
+                    </div>
+                    <div class="movies__buttons-delete">
+                        <a class="button button--red" asp-action="Delete" asp-route-id="@movieVM.Id">удалить</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section>

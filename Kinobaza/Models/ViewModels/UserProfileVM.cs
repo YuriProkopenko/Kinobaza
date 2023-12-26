@@ -4,6 +4,9 @@ namespace Kinobaza.Models.ViewModels
 {
     public class UserProfileVM
     {
+        [Required(ErrorMessage = "Введите логин")]
+        [StringLength(20, ErrorMessage = "Максимальная длина логина не больше 20 символов")]
+        [Display(Name = "Логин")]
         public string? Login { get; set; }
 
         [Required(ErrorMessage = "Введите пароль")]

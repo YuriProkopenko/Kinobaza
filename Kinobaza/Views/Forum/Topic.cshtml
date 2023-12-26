@@ -1,4 +1,7 @@
 ﻿@model ForumTopicVM
+@{
+    var login = this.Context.Session.GetString("login");
+}
 
 <!-- forum topic -->
 
@@ -12,7 +15,7 @@
             <a class="button button--return" asp-action="Topics">назад к списку</a>
         </div>
 
-        @if (Model.Login is not null)
+        @if (login is not null)
         {
             <!--button create-->
             <div class="forum-topic__create-btn">
@@ -31,68 +34,68 @@
     <!-- items -->
 
     <ul class="forum-topic__topic">
-        @if (Model.RecordsVM is not null) {
-            @foreach (var recordVM in Model.RecordsVM)
+        @if (Model.RecordVMs is not null) 
+        {
+            @foreach (var recordVM in Model.RecordVMs)
             {
                 <!-- item -->
                 <li class="topic">
 
-                        <!-- body -->
-                        <div class="topic__body">
+                    <!-- body -->
+                    <div class="topic__body">
 
-                            <!--info-->
-                            <div class="topic__info">
-                                <div class="topic__header">
+                        <!--info-->
+                        <div class="topic__info">
+                            <div class="topic__header">
 
-                                    <!-- date -->
-                                    <div class="topic__author-date">
-                                        <span>@recordVM.Author</span><span> - @recordVM.Date</span>
-                                    </div>
-
-                                    @if (Model.Login == "admin")
-                                    {
-
-                                        <form asp-action="RecordDelete" method="post">
-                                            <input type="hidden" name="recordId" value="@recordVM.Id"/>
-
-                                            <!--buttons-->
-                                            <div class="topic__buttons">
-                                                <div class="topic__buttons-delete">
-                                                    <input class="button button--red" type="submit" value="удалить запись"/>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    }
+                                <!-- date -->
+                                <div class="topic__author-date">
+                                    <span>@recordVM.Author</span><span> - @recordVM.Date</span>
                                 </div>
 
-                                <!-- content -->
-                                @if (recordVM.FileNames is not null)
+                                @if (login == "admin")
                                 {
-                                    @foreach (var content in recordVM.FileNames)
-                                    {
-                                        <div class="topic__desc">
-                                            <div class="topic__content">
-                                                @if (content.Contains("image"))
-                                                {
-                                                    <img src="@content" alt="image">
-                                                }
-                                                @if (content.Contains("audio"))
-                                                {
-                                                    <audio controls src="@content"></audio>
-                                                }
-                                                @if (content.Contains("video"))
-                                                {
-                                                    <video controls src="@content"></video>
-                                                }
+                                    <form asp-action="RecordDelete" method="post">
+                                        <input type="hidden" name="recordId" value="@recordVM.Id"/>
+
+                                        <!--buttons-->
+                                        <div class="topic__buttons">
+                                            <div class="topic__buttons-delete">
+                                                <input class="button button--red" type="submit" value="удалить запись"/>
                                             </div>
                                         </div>
-                                    }
+                                    </form>
                                 }
-
-                                <!-- text -->
-                                <div class="topic__desc">@recordVM.Text</div>
                             </div>
+
+                            <!-- content -->
+                            @if (recordVM.ContentPathsList is not null)
+                            {
+                                @foreach (var content in recordVM.ContentPathsList)
+                                {
+                                    <div class="topic__desc">
+                                        <div class="topic__content">
+                                            @if (content.Contains("image"))
+                                            {
+                                                <img src="@content" alt="image">
+                                            }
+                                            @if (content.Contains("audio"))
+                                            {
+                                                <audio controls src="@content"></audio>
+                                            }
+                                            @if (content.Contains("video"))
+                                            {
+                                                <video controls src="@content"></video>
+                                            }
+                                        </div>
+                                    </div>
+                                }
+                            }
+
+                            <!-- text -->
+                            <div class="topic__desc">@recordVM.Text</div>
                         </div>
+                    </div>
                 </li>
             }
         }

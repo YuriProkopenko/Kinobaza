@@ -8,12 +8,11 @@
 
         <!-- back -->
         <div class="record-create__return-btn">
-            <a class="button button--return" asp-controller="Forum" asp-action="Topic" asp-route-id="@TempData["TopicId"]">назад</a>
+            <a class="button button--return" asp-controller="Forum" asp-action="Topic" asp-route-id="@Model.TopicId">назад</a>
         </div>
     </div>
 
     <form class="record-create__form" asp-action="RecordCreate" method="post" enctype="multipart/form-data">
-        <input type="hidden" value="@TempData["TopicId"]" asp-for="TopicId" />
 
         <!-- record textarea -->
         <div class="record-create__textarea">

@@ -1,0 +1,47 @@
+﻿@model GenreVM;
+
+<!-- Genre Upsert -->
+<section class="genres-upsert">
+
+    <!--title-->
+    @if(Model.Id != 0)
+    {
+        <div class="genres-upsert__title">
+            <p>Изменить жанр "@Model.TitleName"?</p>
+        </div>
+    }
+    else
+    {
+        <div class="genres-upsert__title">
+            <p>Добавить новый жанр?</p>
+        </div>
+    }
+    
+    <!--form-->
+    <form class="genres-upsert__form" asp-action="Upsert" method="post">
+        @if (Model.Id != 0)
+        {
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="TitleName" />
+        }
+
+        <!--name-->
+        <div class="genres-upsert__text-field">
+            <div class="text-field">
+                <label class="text-field__label" asp-for="Name">Название</label>
+                <input class="text-field__input" type="text" asp-for="Name" value="@Model.Name">
+                <span class="valid-span" asp-validation-for="Name"></span>
+            </div>
+        </div>
+
+        <!--buttons-->
+        <div class="genres-upsert__buttons genres-upsert__buttons--row ">
+            <div class="buttons__cancel-btn">
+                <a class="button button--red" asp-action="List">нет</a>
+            </div>
+            <div class="buttons__confirm-btn">
+                <input class="button button--green" type="submit" value="да" />
+            </div>
+        </div>
+    </form>
+</section>

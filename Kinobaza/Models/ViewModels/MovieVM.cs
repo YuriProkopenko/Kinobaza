@@ -5,11 +5,9 @@ namespace Kinobaza.Models.ViewModels
 {
     public class MovieVM
     {
-        public int MovieId { get; set; }
+        public int Id { get; set; }
 
-        public string? Image { get; set; }
-
-        public string? TempTitle { get; set; }
+        public string? Poster { get; set; }
 
         [Required(ErrorMessage = "Укажите название фильма на русском")]
         public string? TitleRu { get; set; }
@@ -20,7 +18,9 @@ namespace Kinobaza.Models.ViewModels
         public DateTime? PremiereDate { get; set; }
 
         [Required(ErrorMessage = "Выберите жанры")]
-        public IEnumerable<string>? Genres { get; set; }
+        public IEnumerable<string>? GenresIds { get; set; }
+
+        public List<string?>? GenresNames { get; set; }
 
         [Required(ErrorMessage = "Укажите режиссера фильма")]
         public string? Director { get; set; }
@@ -31,8 +31,6 @@ namespace Kinobaza.Models.ViewModels
 
         [StringLength(3000, ErrorMessage = "Длина строки должна быть не больше 3000 символов")]
         public string? Description { get; set; }
-
-        public bool IsFavorite { get; set; }
 
         public IEnumerable<SelectListItem>? Items { get; set; }
     }

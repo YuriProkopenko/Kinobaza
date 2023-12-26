@@ -10,6 +10,8 @@ namespace Kinobaza.Models.ViewModels
         [Required(ErrorMessage = "Название должно быть установлено.")]
         public string? Name { get; set; }
 
+        public string? TitleName { get; set; }
+
         public IEnumerable<string?>? MoviesNames { get; set; }
     }
 }

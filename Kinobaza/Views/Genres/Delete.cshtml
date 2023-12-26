@@ -1,0 +1,39 @@
+﻿@model GenreVM
+
+<!-- Genres-delete -->
+<section class="genres-delete">
+    @if(Model?.MoviesNames?.Count() == 0)
+    {
+        <!--title-->
+        <div class="genres-delete__title">
+            <p>Удалить жанр</p>
+            <p>"@Model.Name"?</p>
+        </div>
+
+        <!--form-->
+        <form class="genres-delete__form" asp-action="Delete">
+            <input type="hidden" asp-for="Id" />
+
+            <!--buttons-->
+            <div class="genres-delete__buttons">
+				<div class="buttons__cancel-btn">
+					<a class="button button--red" asp-action="List">нет</a>
+				</div>
+				<div class="buttons__confirm-btn">
+					<input class="button button--green" type="submit" value="да"/>
+				</div>
+            </div>
+        </form>
+    }
+    else
+    {
+        <div class="buttons__return-btn">
+            <a class="button button--return" asp-action="List">назад</a>
+        </div>
+        <div class="genres-delete__title">
+            <p>Нельзя удалить жанр "@Model?.Name".</p>
+            <p>Он является жанром некоторых фильмов.</p>
+        </div>
+    }
+
+</section>

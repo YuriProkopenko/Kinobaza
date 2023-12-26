@@ -38,29 +38,29 @@
                     <li class="dropdown">
                         <span class="menu__link dropdown__menu menu__link--dropdown">Контент</span>
                         <ul class="dropdown__child">
-                            <li><a asp-controller="Genre" asp-action="Index">Жанры</a></li>
-                            <li><a asp-controller="Movie" asp-action="Index">Фильмы</a></li>
+                            <li><a asp-controller="Genres" asp-action="List">Жанры</a></li>
+                            <li><a asp-controller="Movies" asp-action="List">Фильмы</a></li>
                         </ul>
                     </li>
 
                     <!-- users -->
-                    <li><a asp-controller="User" asp-action="Accounts" class="menu__link">Пользователи</a></li>
+                    <li><a asp-controller="Users" asp-action="Accounts" class="menu__link">Пользователи</a></li>
                 }
                 @if (login is not null)
                 {
                     <!-- user -->
                     <li class="dropdown">
-                        <span class="menu__link dropdown__menu menu__link--dropdown">@WC.UserLogin</span>
+                        <span class="menu__link dropdown__menu menu__link--dropdown">@login</span>
                         <ul class="dropdown__child">
-                            <li><a asp-controller="User" asp-action="Profile">Профиль</a></li>
-                            <li><a asp-controller="User" asp-action="Logout">Выйти</a></li>
+                            <li><a asp-controller="Users" asp-action="Profile">Профиль</a></li>
+                            <li><a asp-controller="Users" asp-action="Logout">Выйти</a></li>
                         </ul>
                     </li>
                 }
                 @if (login is null)
                 {
                     <!-- sign in -->
-                    <li><a class="menu__link menu__link--signin" asp-controller="User" asp-action="Authorization">Войти</a></li>
+                    <li><a class="menu__link menu__link--signin" asp-controller="Users" asp-action="Authorization">Войти</a></li>
                 }
 
             </ul>

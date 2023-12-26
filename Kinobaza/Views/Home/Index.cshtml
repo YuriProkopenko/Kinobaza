@@ -1,15 +1,15 @@
-﻿@model IEnumerable<Movie>;
+﻿@model IEnumerable<MovieVM>;
 
 <!--MOVIES-POSTERS-->
 <section class="movies-posters">
 
     <!--items-->
     <div class="movies-posters__items">
-        @foreach(var movie in Model)
+        @foreach(var movieVM in Model)
         {
             <div class="movies-posters__item">
-                <a class="movies-posters__image" asp-controller="Movie" asp-action="Details" asp-route-id="@movie.Id">
-                    <img src="@movie.Image" alt="@movie.TitleEN">
+                <a class="movies-posters__image" asp-controller="Movies" asp-action="Details" asp-route-id="@movieVM.Id">
+                    <img src="@movieVM.Poster" alt="@movieVM.TitleEn">
                 </a>
             </div>
         }
